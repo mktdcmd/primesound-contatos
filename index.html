@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prime Sound - Captura de Contatos</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            max-width: 500px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+        
+        .logo {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .logo h1 {
+            color: #333;
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+        
+        .logo p {
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .form-group {
+            margin-bottom: 24px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+            font-size: 14px;
+        }
+        
+        .radio-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .radio-option {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px;
+            border-radius: 8px;
+            border: 2px solid #e0e0e0;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .radio-option:hover {
+            border-color: #667eea;
+            background: #f8f9ff;
+        }
+        
+        .radio-option input[type="radio"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+            accent-color: #667eea;
+        }
+        
+        .radio-option label {
+            margin-bottom: 0;
+            cursor: pointer;
+            font-weight: 500;
+            flex: 1;
+        }
+        
+        .event-type {
+            font-size: 12px;
+            color: #999;
+            margin-top: 2px;
+        }
+        
+        input[type="tel"] {
+            width: 100%;
+            padding: 14px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        
+        input[type="tel"]:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        input[type="tel"].error {
+            border-color: #ff4757;
+            background-color: #ffe5e5;
+        }
+        
+        .formato-exemplo {
+            background: #f0f4ff;
+            padding: 12px;
+            border-radius: 8px;
+            margin-top: 8px;
+            font-size: 13px;
+            color: #555;
+            border-left: 4px solid #667eea;
+        }
+        
+        .formato-exemplo strong {
+            color: #333;
+        }
+        
+        button {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+        
+        button:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+        
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .message {
+            margin-top: 20px;
+            padding: 14px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 500;
+            display: none;
+            animation: slideIn 0.3s ease;
+            white-space: pre-line;
+        }
+        
+        .message.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            display: block;
+        }
+        
+        .message.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+            display: block;
+        }
+        
+        .error-text {
+            color: #ff4757;
+            font-size: 13px;
+            margin-top: 6px;
+            display: none;
+        }
+        
+        .error-text.show {
+            display: block;
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .loading {
+            display: none;
+            text-align: center;
+            margin-top: 10px;
+        }
+        
+        .spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .info-box {
+            background: #f0f4ff;
+            padding: 16px;
+            border-radius: 8px;
+            margin-bottom: 24px;
+            font-size: 13px;
+            color: #555;
+            border-left: 4px solid #667eea;
+            line-height: 1.6;
+        }
+        
+        .info-box strong {
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <h1>🎵 Prime Sound</h1>
+            <p>Captura de Contatos - Meta Offline</p>
+        </div>
+        
+        <div class="info-box">
+            <strong>📋 Como usar:</strong><br>
+            1. Selecione quem está usando<br>
+            2. Digite o telefone da pessoa<br>
+            3. Clique em "Enviar"<br>
+            4. Pronto! Os dados já foram para a planilha.
+        </div>
+        
+        <form id="form">
+            <div class="form-group">
+                <label>👤 Quem está usando?</label>
+                <div class="radio-group">
+                    <div class="radio-option">
+                        <input type="radio" id="jessica" name="operador" value="jessica" required>
+                        <label for="jessica">
+                            Jéssica
+                            <div class="event-type">→ LeadPPF</div>
+                        </label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="rogerio" name="operador" value="rogerio">
+                        <label for="rogerio">
+                            Rogério
+                            <div class="event-type">→ LeadPPF</div>
+                        </label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="ricardo" name="operador" value="ricardo">
+                        <label for="ricardo">
+                            Ricardo
+                            <div class="event-type">→ LeadPelícula</div>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="telefone">📱 Número de Telefone</label>
+                <input 
+                    type="tel" 
+                    id="telefone" 
+                    name="telefone"
+                    placeholder="Ex: 5511987654321"
+                    required
+                    pattern="\d{13,14}"
+                    autocomplete="off"
+                >
+                <div class="formato-exemplo">
+                    <strong>✓ Formato correto:</strong><br>
+                    55 + DDD (2 dígitos) + Telefone (8 ou 9 dígitos)<br>
+                    <strong>Exemplo:</strong> 5511987654321
+                </div>
+                <div class="error-text" id="errorText"></div>
+            </div>
+            
+            <button type="submit">Enviar Contato</button>
+            
+            <div class="loading" id="loading">
+                <div class="spinner"></div>
+            </div>
+        </form>
+        
+        <div class="message" id="message"></div>
+    </div>
+
+    <script>
+        const form = document.getElementById('form');
+        const telefoneInput = document.getElementById('telefone');
+        const messageDiv = document.getElementById('message');
+        const errorText = document.getElementById('errorText');
+        const loadingDiv = document.getElementById('loading');
+        
+        const SCRIPT_URL = 'AKfycbzfCl3jzHaRQBoRiqGGtM3cVUo7jxhSdHMut9rsmxJ4pFR7LNzl714nMIJAOLboncGMPw/exec';
+        
+        telefoneInput.addEventListener('input', (e) => {
+            const valor = e.target.value.replace(/\D/g, '');
+            
+            if (valor.length > 0 && valor.length < 13) {
+                telefoneInput.classList.add('error');
+                errorText.classList.add('show');
+                errorText.textContent = `❌ Incompleto! Faltam ${13 - valor.length} dígitos`;
+            } else if (valor.length >= 13 && !valor.startsWith('55')) {
+                telefoneInput.classList.add('error');
+                errorText.classList.add('show');
+                errorText.textContent = '❌ Deve começar com 55 (código do Brasil)';
+            } else {
+                telefoneInput.classList.remove('error');
+                errorText.classList.remove('show');
+            }
+        });
+        
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const operador = document.querySelector('input[name="operador"]:checked').value;
+            const telefone = telefoneInput.value.replace(/\D/g, '');
+            
+            if (!operador) {
+                showMessage('❌ Selecione quem está usando!', 'error');
+                return;
+            }
+            
+            if (telefone.length < 13 || telefone.length > 14) {
+                showMessage('❌ Número de telefone inválido! Use o formato: 5511987654321', 'error');
+                telefoneInput.classList.add('error');
+                return;
+            }
+            
+            if (!telefone.startsWith('55')) {
+                showMessage('❌ O número deve começar com 55 (código do Brasil)', 'error');
+                telefoneInput.classList.add('error');
+                return;
+            }
+            
+            loadingDiv.style.display = 'block';
+            
+            try {
+                const response = await fetch(SCRIPT_URL, {
+                    method: 'POST',
+                    body: new URLSearchParams({
+                        operador: operador,
+                        telefone: telefone
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    showMessage(
+                        `✅ Sucesso!\n\nOperador: ${operador.charAt(0).toUpperCase() + operador.slice(1)}\nEvento: ${data.evento}\nTelefone: ${telefone}\n\nOs dados já estão na planilha!`,
+                        'success'
+                    );
+                    form.reset();
+                    telefoneInput.classList.remove('error');
+                    errorText.classList.remove('show');
+                } else {
+                    showMessage('❌ ' + data.message, 'error');
+                }
+            } catch (error) {
+                showMessage('❌ Erro ao enviar. Verifique se a URL do Apps Script está correta.', 'error');
+                console.error(error);
+            } finally {
+                loadingDiv.style.display = 'none';
+            }
+        });
+        
+        function showMessage(text, type) {
+            messageDiv.textContent = text;
+            messageDiv.className = `message ${type}`;
+        }
+    </script>
+</body>
+</html>
