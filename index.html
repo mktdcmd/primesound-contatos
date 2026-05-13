@@ -713,10 +713,10 @@
                         type="tel"
                         id="telefone"
                         class="form-input"
-                        placeholder="55 11 9 8765-4321"
+                        placeholder="+55 11 98765-4321 ou +1 (555) 123-4567"
                         required
                     >
-                    <span class="form-helper">Formato: 55 + DDD + número (13-14 dígitos)</span>
+                    <span class="form-helper">Formato internacional: +código país DDD número</span>
                     <span class="form-helper error" id="telefoneError"></span>
                 </div>
 
@@ -754,7 +754,7 @@
                         id="dataHora"
                         class="form-input"
                     >
-                    <span class="form-helper">Formato: AAAA-MM-DD HH:MM:SS</span>
+                    <span class="form-helper">Formato: AAAA-MM-DD HH:MM</span>
                     <span class="form-helper error" id="dataHoraError"></span>
                 </div>
 
@@ -772,6 +772,9 @@
     <script>
         const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxlTvH-F8ENibzn_vEQYgHWJUnqu6d8r0tyl8h_w_9EAteDhu67X0WsM5pjde1q41nBTw/exec';
         const CODIGO_CORRETO = 'vendas2026';
+
+        // DDDs válidos brasileiros
+        const DDDS_BRASILEIROS = ['11', '12', '13', '14', '15', '16', '17', '18', '19', '21', '22', '24', '27', '28', '31', '32', '33', '34', '35', '37', '38', '41', '42', '43', '44', '45', '46', '47', '48', '49', '51', '53', '54', '55', '61', '62', '64', '63', '65', '66', '67', '68', '69', '71', '73', '74', '75', '77', '79', '82', '83', '84', '85', '86', '87', '88', '89', '91', '92', '93', '94', '95', '96', '97', '98', '99'];
 
         // Elements
         const loginContainer = document.getElementById('loginContainer');
@@ -823,36 +826,60 @@
             codigoInput.value = '';
         }
 
-        // Phone mask
+        // Phone mask e validação internacional
         telefoneInput.addEventListener('input', (e) => {
             let value = e.target.value.replace(/\D/g, '');
-            if (value.length > 14) value = value.slice(0, 14);
-
+            
             if (value.length === 0) {
                 e.target.value = '';
                 telefoneError.classList.remove('show');
-            } else if (value.length <= 2) {
-                e.target.value = value;
-            } else if (value.length <= 4) {
-                e.target.value = value.slice(0, 2) + ' ' + value.slice(2);
-            } else if (value.length <= 9) {
-                e.target.value = value.slice(0, 2) + ' ' + value.slice(2, 4) + ' ' + value.slice(4);
-            } else {
-                e.target.value = value.slice(0, 2) + ' ' + value.slice(2, 4) + ' ' + value.slice(4, 9) + '-' + value.slice(9);
+                return;
             }
 
-            // Real-time validation
-            if (value.length > 0 && value.length < 13) {
-                telefoneError.textContent = `ℹ️ Faltam ${13 - value.length} dígitos`;
-                telefoneError.classList.add('show');
-                telefoneInput.classList.add('error');
-            } else if (value.length >= 13 && !value.startsWith('55')) {
-                telefoneError.textContent = 'ℹ️ Deve começar com 55 (código do Brasil)';
-                telefoneError.classList.add('show');
-                telefoneInput.classList.add('error');
-            } else if (value.length >= 13) {
-                telefoneError.classList.remove('show');
-                telefoneInput.classList.remove('error');
+            // Detectar se é Brasil (55) ou outro país
+            if (value.startsWith('55')) {
+                // Brasil - validar DDD
+                const ddd = value.substring(2, 4);
+                const numero = value.substring(4);
+
+                if (value.length > 14) value = value.slice(0, 14);
+
+                if (value.length <= 2) {
+                    e.target.value = value;
+                } else if (value.length <= 4) {
+                    e.target.value = value.slice(0, 2) + ' ' + value.slice(2);
+                } else if (value.length <= 9) {
+                    e.target.value = value.slice(0, 2) + ' ' + value.slice(2, 4) + ' ' + value.slice(4);
+                } else {
+                    e.target.value = value.slice(0, 2) + ' ' + value.slice(2, 4) + ' ' + value.slice(4, 9) + '-' + value.slice(9);
+                }
+
+                // Validar DDD brasileiro
+                if (ddd && !DDDS_BRASILEIROS.includes(ddd)) {
+                    telefoneError.textContent = `ℹ️ DDD ${ddd} não é válido no Brasil`;
+                    telefoneError.classList.add('show');
+                    telefoneInput.classList.add('error');
+                } else if (value.length >= 13) {
+                    telefoneError.classList.remove('show');
+                    telefoneInput.classList.remove('error');
+                } else if (value.length > 0 && value.length < 13) {
+                    telefoneError.textContent = `ℹ️ Faltam ${13 - value.length} dígitos`;
+                    telefoneError.classList.add('show');
+                    telefoneInput.classList.add('error');
+                }
+            } else {
+                // Outros países - apenas manter máximo de 15 dígitos
+                if (value.length > 15) value = value.slice(0, 15);
+                e.target.value = '+' + value;
+                
+                if (value.length >= 10) {
+                    telefoneError.classList.remove('show');
+                    telefoneInput.classList.remove('error');
+                } else {
+                    telefoneError.textContent = 'ℹ️ Digite um número válido';
+                    telefoneError.classList.add('show');
+                    telefoneInput.classList.add('error');
+                }
             }
         });
 
@@ -871,7 +898,7 @@
             });
         });
 
-        // Toggle retroativo
+        // Toggle retroativo - CORRIGIDO
         retroativoCheckbox.addEventListener('change', () => {
             if (retroativoCheckbox.checked) {
                 dataHoraGroup.classList.remove('hidden');
@@ -910,16 +937,25 @@
                 return;
             }
 
-            if (telefone.length < 13 || telefone.length > 14) {
-                showMessage('❌ Telefone inválido. Use: 55 11 98765-4321', 'error');
+            // Validar telefone
+            if (telefone.length < 10) {
+                showMessage('❌ Telefone inválido', 'error');
                 telefoneInput.classList.add('error');
                 return;
             }
 
-            if (!telefone.startsWith('55')) {
-                showMessage('❌ Telefone deve começar com 55', 'error');
-                telefoneInput.classList.add('error');
-                return;
+            // Validar DDD se Brasil
+            if (telefone.startsWith('55')) {
+                if (telefone.length < 13 || telefone.length > 14) {
+                    showMessage('❌ Telefone brasileiro deve ter 13-14 dígitos', 'error');
+                    telefoneInput.classList.add('error');
+                    return;
+                }
+                const ddd = telefone.substring(2, 4);
+                if (!DDDS_BRASILEIROS.includes(ddd)) {
+                    showMessage(`❌ DDD ${ddd} inválido`, 'error');
+                    return;
+                }
             }
 
             if (tipo === 'fechado' && !email) {
@@ -931,7 +967,7 @@
             }
 
             if (tipo === 'fechado' && !email.includes('@')) {
-                showMessage('❌ E-mail inválido. Use: cliente@empresa.com', 'error');
+                showMessage('❌ E-mail inválido', 'error');
                 emailInput.classList.add('error');
                 return;
             }
@@ -960,7 +996,7 @@
                 const data = await response.json();
 
                 if (data.success) {
-                    showMessage(`✓ ${data.message}`, 'success');
+                    showMessage('✓ Registro enviado com sucesso!', 'success');
                     form.reset();
                     emailGroup.classList.add('hidden');
                     dataHoraGroup.classList.add('hidden');
@@ -971,7 +1007,7 @@
                     showMessage(`❌ ${data.message}`, 'error');
                 }
             } catch (error) {
-                showMessage('❌ Erro ao enviar. Verifique a URL do Apps Script.', 'error');
+                showMessage('❌ Erro ao enviar. Verifique a conexão.', 'error');
                 console.error(error);
             } finally {
                 loadingDiv.style.display = 'none';
