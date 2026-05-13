@@ -3,400 +3,981 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prime Sound - Captura de Contatos</title>
+    <title>Prime Sound - Meta Ads Data Capture</title>
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=Outfit:wght@700;800&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
+
+        :root {
+            --bg-primary: #0a0e17;
+            --bg-secondary: #131823;
+            --bg-tertiary: #1a1f2e;
+            --border-color: #262d3d;
+            --text-primary: #ffffff;
+            --text-secondary: #a8b2c1;
+            --text-tertiary: #757f8f;
+            --accent-red: #dc2626;
+            --accent-orange: #ea580c;
+            --success: #10b981;
+            --error: #ef4444;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Sora', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 50%, var(--bg-primary) 100%);
             min-height: 100vh;
+            color: var(--text-primary);
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(220, 38, 38, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(234, 88, 12, 0.03) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .login-container {
             display: flex;
             justify-content: center;
             align-items: center;
+            min-height: 100vh;
             padding: 20px;
+            animation: fadeIn 0.8s ease-out;
         }
-        
-        .container {
-            background: white;
-            border-radius: 16px;
-            padding: 40px;
-            max-width: 500px;
+
+        .login-container.hidden {
+            display: none;
+        }
+
+        .login-card {
             width: 100%;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 380px;
+            padding: 60px 40px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            backdrop-filter: blur(20px);
         }
-        
-        .logo {
+
+        .login-header {
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 50px;
         }
-        
-        .logo h1 {
-            color: #333;
+
+        .logo-mark {
+            font-size: 48px;
+            margin-bottom: 16px;
+            opacity: 0.9;
+        }
+
+        .login-title {
+            font-family: 'Outfit', sans-serif;
             font-size: 28px;
-            margin-bottom: 10px;
+            font-weight: 800;
+            letter-spacing: -1px;
+            margin-bottom: 8px;
         }
-        
-        .logo p {
-            color: #666;
-            font-size: 14px;
+
+        .login-subtitle {
+            font-size: 13px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 2px;
         }
-        
-        .form-group {
+
+        .login-input-group {
             margin-bottom: 24px;
         }
-        
-        label {
-            display: block;
-            margin-bottom: 8px;
-            color: #333;
-            font-weight: 600;
-            font-size: 14px;
-        }
-        
-        .radio-group {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-        
-        .radio-option {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 12px;
-            border-radius: 8px;
-            border: 2px solid #e0e0e0;
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-        
-        .radio-option:hover {
-            border-color: #667eea;
-            background: #f8f9ff;
-        }
-        
-        .radio-option input[type="radio"] {
-            width: 18px;
-            height: 18px;
-            cursor: pointer;
-            accent-color: #667eea;
-        }
-        
-        .radio-option label {
-            margin-bottom: 0;
-            cursor: pointer;
-            font-weight: 500;
-            flex: 1;
-        }
-        
-        .event-type {
-            font-size: 12px;
-            color: #999;
-            margin-top: 2px;
-        }
-        
-        input[type="tel"] {
+
+        .login-input {
             width: 100%;
-            padding: 14px;
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
-            font-size: 16px;
-            transition: all 0.3s ease;
-            font-weight: 500;
+            padding: 14px 16px;
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            color: var(--text-primary);
+            font-size: 15px;
+            font-family: 'Sora', sans-serif;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        
-        input[type="tel"]:focus {
+
+        .login-input::placeholder {
+            color: var(--text-tertiary);
+        }
+
+        .login-input:focus {
             outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            border-color: var(--accent-red);
+            background: rgba(220, 38, 38, 0.03);
+            box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
         }
-        
-        input[type="tel"].error {
-            border-color: #ff4757;
-            background-color: #ffe5e5;
-        }
-        
-        .formato-exemplo {
-            background: #f0f4ff;
-            padding: 12px;
-            border-radius: 8px;
-            margin-top: 8px;
-            font-size: 13px;
-            color: #555;
-            border-left: 4px solid #667eea;
-        }
-        
-        .formato-exemplo strong {
-            color: #333;
-        }
-        
-        button {
+
+        .login-button {
             width: 100%;
-            padding: 14px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 14px 16px;
+            background: linear-gradient(135deg, var(--accent-red) 0%, var(--accent-orange) 100%);
             color: white;
             border: none;
-            border-radius: 8px;
-            font-size: 16px;
+            border-radius: 12px;
+            font-size: 15px;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s ease;
-            margin-top: 10px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            letter-spacing: 0.5px;
+            position: relative;
+            overflow: hidden;
         }
-        
-        button:hover:not(:disabled) {
+
+        .login-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            transition: left 0.4s ease;
+        }
+
+        .login-button:hover::before {
+            left: 100%;
+        }
+
+        .login-button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+            box-shadow: 0 12px 24px rgba(220, 38, 38, 0.25);
         }
-        
-        button:disabled {
-            background: #ccc;
-            cursor: not-allowed;
-            transform: none;
-        }
-        
-        .message {
-            margin-top: 20px;
-            padding: 14px;
+
+        .login-error {
+            margin-top: 16px;
+            padding: 12px 14px;
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
             border-radius: 8px;
-            text-align: center;
-            font-weight: 500;
-            display: none;
-            animation: slideIn 0.3s ease;
-            white-space: pre-line;
-        }
-        
-        .message.success {
-            background: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
-            display: block;
-        }
-        
-        .message.error {
-            background: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
-            display: block;
-        }
-        
-        .error-text {
-            color: #ff4757;
+            color: #fca5a5;
             font-size: 13px;
-            margin-top: 6px;
             display: none;
+            animation: slideDown 0.3s ease;
         }
-        
-        .error-text.show {
+
+        .login-error.show {
             display: block;
         }
-        
-        @keyframes slideIn {
+
+        @keyframes slideDown {
             from {
                 opacity: 0;
-                transform: translateY(-10px);
+                transform: translateY(-8px);
             }
             to {
                 opacity: 1;
                 transform: translateY(0);
             }
         }
-        
+
+        .main-container {
+            display: none;
+            padding: 60px 20px;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        .main-container.active {
+            display: block;
+        }
+
+        .content-wrapper {
+            max-width: 520px;
+            margin: 0 auto;
+        }
+
+        .header-section {
+            text-align: center;
+            margin-bottom: 60px;
+            animation: slideUp 0.6s ease-out 0.2s both;
+        }
+
+        .header-logo {
+            font-size: 40px;
+            margin-bottom: 12px;
+        }
+
+        .header-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 32px;
+            font-weight: 800;
+            letter-spacing: -1.5px;
+            margin-bottom: 8px;
+        }
+
+        .header-title span {
+            background: linear-gradient(135deg, var(--accent-red), var(--accent-orange));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header-subtitle {
+            font-size: 13px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .seller-selector {
+            margin-bottom: 60px;
+            animation: slideUp 0.6s ease-out 0.3s both;
+        }
+
+        .selector-label {
+            display: block;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+        }
+
+        .seller-circles {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
+
+        .seller-circle {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 1;
+        }
+
+        .seller-radio {
+            display: none;
+        }
+
+        .seller-radio:checked + .circle-button {
+            background: linear-gradient(135deg, var(--accent-red), var(--accent-orange));
+            border-color: var(--accent-red);
+            box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.15);
+        }
+
+        .seller-radio:checked + .circle-button .circle-label {
+            color: white;
+        }
+
+        .circle-button {
+            position: absolute;
+            inset: 0;
+            border: 2px solid var(--border-color);
+            border-radius: 50%;
+            background: var(--bg-tertiary);
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 16px;
+        }
+
+        .seller-radio:not(:checked) + .circle-button:hover {
+            border-color: var(--accent-red);
+            background: rgba(220, 38, 38, 0.05);
+        }
+
+        .circle-icon {
+            font-size: 24px;
+        }
+
+        .circle-label {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            transition: color 0.3s ease;
+            text-align: center;
+        }
+
+        .form-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 50px 40px;
+            animation: slideUp 0.6s ease-out 0.4s both;
+        }
+
+        .form-group {
+            margin-bottom: 32px;
+            animation: slideInField 0.5s ease-out backwards;
+        }
+
+        .form-group:nth-child(1) { animation-delay: 0.5s; }
+        .form-group:nth-child(2) { animation-delay: 0.6s; }
+        .form-group:nth-child(3) { animation-delay: 0.7s; }
+        .form-group:nth-child(4) { animation-delay: 0.8s; }
+
+        @keyframes slideInField {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .form-group.hidden {
+            display: none;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-secondary);
+            margin-bottom: 12px;
+        }
+
+        .form-input,
+        .form-select {
+            width: 100%;
+            padding: 14px 16px;
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            color: var(--text-primary);
+            font-size: 15px;
+            font-family: 'Sora', sans-serif;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .form-input::placeholder {
+            color: var(--text-tertiary);
+        }
+
+        .form-input:focus,
+        .form-select:focus {
+            outline: none;
+            border-color: var(--accent-red);
+            background: rgba(220, 38, 38, 0.03);
+            box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
+        }
+
+        .form-input.error {
+            border-color: var(--error);
+            background: rgba(239, 68, 68, 0.05);
+        }
+
+        .form-input.error:focus {
+            box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+            border-color: var(--error);
+        }
+
+        .form-helper {
+            display: block;
+            font-size: 12px;
+            color: var(--text-tertiary);
+            margin-top: 8px;
+            line-height: 1.5;
+        }
+
+        .form-helper.error {
+            color: #fca5a5;
+            display: none;
+        }
+
+        .form-helper.error.show {
+            display: block;
+        }
+
+        .radio-group {
+            display: grid;
+            gap: 12px;
+        }
+
+        .radio-option {
+            position: relative;
+            display: flex;
+            align-items: center;
+            padding: 14px 16px;
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .radio-option:hover {
+            border-color: var(--accent-red);
+            background: rgba(220, 38, 38, 0.03);
+        }
+
+        .radio-option input[type="radio"] {
+            width: 16px;
+            height: 16px;
+            margin-right: 12px;
+            cursor: pointer;
+            accent-color: var(--accent-red);
+        }
+
+        .radio-option label {
+            margin: 0;
+            cursor: pointer;
+            font-size: 14px;
+            flex: 1;
+        }
+
+        .toggle-group {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .toggle-switch {
+            position: relative;
+            width: 48px;
+            height: 28px;
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .toggle-switch input {
+            display: none;
+        }
+
+        .toggle-switch input:checked ~ .toggle-track {
+            background: linear-gradient(135deg, var(--accent-red), var(--accent-orange));
+            border-color: var(--accent-red);
+        }
+
+        .toggle-switch input:checked ~ .toggle-thumb {
+            left: 24px;
+        }
+
+        .toggle-track {
+            position: absolute;
+            inset: 0;
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .toggle-thumb {
+            position: absolute;
+            width: 24px;
+            height: 24px;
+            background: white;
+            border-radius: 50%;
+            top: 1px;
+            left: 2px;
+            transition: left 0.3s ease;
+        }
+
+        .toggle-label {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .form-submit {
+            width: 100%;
+            padding: 16px 20px;
+            background: linear-gradient(135deg, var(--accent-red) 0%, var(--accent-orange) 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            letter-spacing: 0.5px;
+            margin-top: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .form-submit::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            transition: left 0.4s ease;
+        }
+
+        .form-submit:hover::before {
+            left: 100%;
+        }
+
+        .form-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 24px rgba(220, 38, 38, 0.25);
+        }
+
+        .form-submit:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .message {
+            margin-top: 24px;
+            padding: 16px;
+            border-radius: 12px;
+            border-left: 4px solid;
+            display: none;
+            animation: slideDown 0.3s ease;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .message.success {
+            background: rgba(16, 185, 129, 0.1);
+            border-color: var(--success);
+            color: #86efac;
+            display: block;
+        }
+
+        .message.error {
+            background: rgba(239, 68, 68, 0.1);
+            border-color: var(--error);
+            color: #fca5a5;
+            display: block;
+        }
+
         .loading {
             display: none;
             text-align: center;
-            margin-top: 10px;
+            margin-top: 20px;
         }
-        
+
         .spinner {
-            border: 3px solid #f3f3f3;
-            border-top: 3px solid #667eea;
-            border-radius: 50%;
             width: 20px;
             height: 20px;
-            animation: spin 1s linear infinite;
+            border: 2px solid var(--border-color);
+            border-top-color: var(--accent-red);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
             margin: 0 auto;
         }
-        
+
         @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            to { transform: rotate(360deg); }
         }
-        
-        .info-box {
-            background: #f0f4ff;
-            padding: 16px;
-            border-radius: 8px;
-            margin-bottom: 24px;
-            font-size: 13px;
-            color: #555;
-            border-left: 4px solid #667eea;
-            line-height: 1.6;
-        }
-        
-        .info-box strong {
-            color: #333;
+
+        @media (max-width: 600px) {
+            .login-card {
+                padding: 40px 24px;
+            }
+
+            .form-card {
+                padding: 40px 24px;
+            }
+
+            .header-title {
+                font-size: 28px;
+            }
+
+            .seller-circles {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 12px;
+            }
+
+            .circle-label {
+                font-size: 12px;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="logo">
-            <h1>🎵 Prime Sound</h1>
-            <p>Captura de Contatos - Meta Offline</p>
+    <!-- LOGIN SCREEN -->
+    <div class="login-container" id="loginContainer">
+        <div class="login-card">
+            <div class="login-header">
+                <div class="logo-mark">🎵</div>
+                <h1 class="login-title">PRIME<span style="color: #dc2626;">SOUND</span></h1>
+                <p class="login-subtitle">Meta Ads System</p>
+            </div>
+
+            <form id="loginForm">
+                <div class="login-input-group">
+                    <input
+                        type="password"
+                        id="codigoInput"
+                        class="login-input"
+                        placeholder="Código de acesso"
+                        required
+                    >
+                </div>
+                <button type="submit" class="login-button">Acessar</button>
+                <div class="login-error" id="loginError"></div>
+            </form>
         </div>
-        
-        <div class="info-box">
-            <strong>📋 Como usar:</strong><br>
-            1. Selecione quem está usando<br>
-            2. Digite o telefone da pessoa<br>
-            3. Clique em "Enviar"<br>
-            4. Pronto! Os dados já foram para a planilha.
-        </div>
-        
-        <form id="form">
-            <div class="form-group">
-                <label>👤 Quem está usando?</label>
-                <div class="radio-group">
-                    <div class="radio-option">
-                        <input type="radio" id="jessica" name="operador" value="jessica" required>
-                        <label for="jessica">
-                            Jéssica
-                            <div class="event-type">→ LeadPPF</div>
+    </div>
+
+    <!-- MAIN SCREEN -->
+    <div class="main-container" id="mainContainer">
+        <div class="content-wrapper">
+            <div class="header-section">
+                <div class="header-logo">🎵</div>
+                <h1 class="header-title">PRIME<span>SOUND</span></h1>
+                <p class="header-subtitle">Meta Ads Data Capture</p>
+            </div>
+
+            <!-- SELLER SELECTOR -->
+            <div class="seller-selector">
+                <label class="selector-label">Quem é você?</label>
+                <div class="seller-circles">
+                    <div class="seller-circle">
+                        <input type="radio" id="ricardo" name="vendedor" value="ricardo" class="seller-radio" required>
+                        <label for="ricardo" class="circle-button">
+                            <span class="circle-icon">R</span>
+                            <span class="circle-label">Ricardo</span>
                         </label>
                     </div>
-                    <div class="radio-option">
-                        <input type="radio" id="rogerio" name="operador" value="rogerio">
-                        <label for="rogerio">
-                            Rogério
-                            <div class="event-type">→ LeadPPF</div>
+                    <div class="seller-circle">
+                        <input type="radio" id="rogerio" name="vendedor" value="rogerio" class="seller-radio">
+                        <label for="rogerio" class="circle-button">
+                            <span class="circle-icon">Ro</span>
+                            <span class="circle-label">Rogério</span>
                         </label>
                     </div>
-                    <div class="radio-option">
-                        <input type="radio" id="ricardo" name="operador" value="ricardo">
-                        <label for="ricardo">
-                            Ricardo
-                            <div class="event-type">→ LeadPelícula</div>
+                    <div class="seller-circle">
+                        <input type="radio" id="jessica" name="vendedor" value="jessica" class="seller-radio">
+                        <label for="jessica" class="circle-button">
+                            <span class="circle-icon">J</span>
+                            <span class="circle-label">Jéssica</span>
                         </label>
                     </div>
                 </div>
             </div>
-            
-            <div class="form-group">
-                <label for="telefone">📱 Número de Telefone</label>
-                <input 
-                    type="tel" 
-                    id="telefone" 
-                    name="telefone"
-                    placeholder="Ex: 5511987654321"
-                    required
-                    pattern="\d{13,14}"
-                    autocomplete="off"
-                >
-                <div class="formato-exemplo">
-                    <strong>✓ Formato correto:</strong><br>
-                    55 + DDD (2 dígitos) + Telefone (8 ou 9 dígitos)<br>
-                    <strong>Exemplo:</strong> 5511987654321
+
+            <!-- FORM -->
+            <form id="form" class="form-card">
+                <!-- TIPO DE REGISTRO -->
+                <div class="form-group">
+                    <label class="form-label">Tipo de Registro</label>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" id="tipo-potencial" name="tipo" value="potencial" required>
+                            <label for="tipo-potencial">Potencial (Lead)</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="tipo-fechado" name="tipo" value="fechado">
+                            <label for="tipo-fechado">Negócio Fechado (Purchase)</label>
+                        </div>
+                    </div>
                 </div>
-                <div class="error-text" id="errorText"></div>
-            </div>
-            
-            <button type="submit">Enviar Contato</button>
-            
-            <div class="loading" id="loading">
-                <div class="spinner"></div>
-            </div>
-        </form>
-        
-        <div class="message" id="message"></div>
+
+                <!-- TELEFONE -->
+                <div class="form-group">
+                    <label class="form-label">Telefone do Cliente</label>
+                    <input
+                        type="tel"
+                        id="telefone"
+                        class="form-input"
+                        placeholder="55 11 9 8765-4321"
+                        required
+                    >
+                    <span class="form-helper">Formato: 55 + DDD + número (13-14 dígitos)</span>
+                    <span class="form-helper error" id="telefoneError"></span>
+                </div>
+
+                <!-- EMAIL (CONDICIONAL) -->
+                <div class="form-group hidden" id="emailGroup">
+                    <label class="form-label">E-mail do Cliente</label>
+                    <input
+                        type="email"
+                        id="email"
+                        class="form-input"
+                        placeholder="cliente@exemplo.com"
+                    >
+                    <span class="form-helper">Aumenta Match Rate na Meta</span>
+                    <span class="form-helper error" id="emailError"></span>
+                </div>
+
+                <!-- LANÇAMENTO RETROATIVO -->
+                <div class="form-group">
+                    <label class="form-label">Lançamento Retroativo</label>
+                    <div class="toggle-group">
+                        <div class="toggle-switch">
+                            <input type="checkbox" id="retroativo" name="retroativo">
+                            <div class="toggle-track"></div>
+                            <div class="toggle-thumb"></div>
+                        </div>
+                        <span class="toggle-label" id="retroativoStatus">Usar horário atual</span>
+                    </div>
+                </div>
+
+                <!-- DATA/HORA (CONDICIONAL) -->
+                <div class="form-group hidden" id="dataHoraGroup">
+                    <label class="form-label">Data e Hora</label>
+                    <input
+                        type="datetime-local"
+                        id="dataHora"
+                        class="form-input"
+                    >
+                    <span class="form-helper">Formato: AAAA-MM-DD HH:MM:SS</span>
+                    <span class="form-helper error" id="dataHoraError"></span>
+                </div>
+
+                <button type="submit" class="form-submit">Enviar Registro</button>
+
+                <div class="loading" id="loading">
+                    <div class="spinner"></div>
+                </div>
+
+                <div class="message" id="message"></div>
+            </form>
+        </div>
     </div>
 
     <script>
+        const SCRIPT_URL = 'https://script.google.com/macros/d/1h3Rl7ohhM2IB_1sN_upOp8uOJHckdgLCZ2F9ackUeuw/usercopy';
+        const CODIGO_CORRETO = 'vendas2026';
+
+        // Elements
+        const loginContainer = document.getElementById('loginContainer');
+        const mainContainer = document.getElementById('mainContainer');
+        const loginForm = document.getElementById('loginForm');
+        const codigoInput = document.getElementById('codigoInput');
+        const loginError = document.getElementById('loginError');
+
         const form = document.getElementById('form');
+        const vendedorInputs = document.querySelectorAll('input[name="vendedor"]');
+        const tipoInputs = document.querySelectorAll('input[name="tipo"]');
         const telefoneInput = document.getElementById('telefone');
+        const telefoneError = document.getElementById('telefoneError');
+        const emailGroup = document.getElementById('emailGroup');
+        const emailInput = document.getElementById('email');
+        const emailError = document.getElementById('emailError');
+        const retroativoCheckbox = document.getElementById('retroativo');
+        const retroativoStatus = document.getElementById('retroativoStatus');
+        const dataHoraGroup = document.getElementById('dataHoraGroup');
+        const dataHoraInput = document.getElementById('dataHora');
+        const dataHoraError = document.getElementById('dataHoraError');
         const messageDiv = document.getElementById('message');
-        const errorText = document.getElementById('errorText');
         const loadingDiv = document.getElementById('loading');
-        
-        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzfCl3jzHaRQBoRiqGGtM3cVUo7jxhSdHMut9rsmxJ4pFR7LNzl714nMIJAOLboncGMPw/exec';
-        
-        telefoneInput.addEventListener('input', (e) => {
-            const valor = e.target.value.replace(/\D/g, '');
-            
-            if (valor.length > 0 && valor.length < 13) {
-                telefoneInput.classList.add('error');
-                errorText.classList.add('show');
-                errorText.textContent = `❌ Incompleto! Faltam ${13 - valor.length} dígitos`;
-            } else if (valor.length >= 13 && !valor.startsWith('55')) {
-                telefoneInput.classList.add('error');
-                errorText.classList.add('show');
-                errorText.textContent = '❌ Deve começar com 55 (código do Brasil)';
-            } else {
-                telefoneInput.classList.remove('error');
-                errorText.classList.remove('show');
+
+        // Check session on load
+        window.addEventListener('load', () => {
+            if (sessionStorage.getItem('primesound_auth') === 'true') {
+                showMainScreen();
             }
         });
-        
+
+        // LOGIN
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            if (codigoInput.value === CODIGO_CORRETO) {
+                sessionStorage.setItem('primesound_auth', 'true');
+                showMainScreen();
+            } else {
+                loginError.textContent = '❌ Código incorreto. Tente novamente.';
+                loginError.classList.add('show');
+                codigoInput.value = '';
+                codigoInput.focus();
+            }
+        });
+
+        function showMainScreen() {
+            loginContainer.classList.add('hidden');
+            mainContainer.classList.add('active');
+            codigoInput.value = '';
+        }
+
+        // Phone mask
+        telefoneInput.addEventListener('input', (e) => {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length > 14) value = value.slice(0, 14);
+
+            if (value.length === 0) {
+                e.target.value = '';
+                telefoneError.classList.remove('show');
+            } else if (value.length <= 2) {
+                e.target.value = value;
+            } else if (value.length <= 4) {
+                e.target.value = value.slice(0, 2) + ' ' + value.slice(2);
+            } else if (value.length <= 9) {
+                e.target.value = value.slice(0, 2) + ' ' + value.slice(2, 4) + ' ' + value.slice(4);
+            } else {
+                e.target.value = value.slice(0, 2) + ' ' + value.slice(2, 4) + ' ' + value.slice(4, 9) + '-' + value.slice(9);
+            }
+
+            // Real-time validation
+            if (value.length > 0 && value.length < 13) {
+                telefoneError.textContent = `ℹ️ Faltam ${13 - value.length} dígitos`;
+                telefoneError.classList.add('show');
+                telefoneInput.classList.add('error');
+            } else if (value.length >= 13 && !value.startsWith('55')) {
+                telefoneError.textContent = 'ℹ️ Deve começar com 55 (código do Brasil)';
+                telefoneError.classList.add('show');
+                telefoneInput.classList.add('error');
+            } else if (value.length >= 13) {
+                telefoneError.classList.remove('show');
+                telefoneInput.classList.remove('error');
+            }
+        });
+
+        // Show/hide email
+        tipoInputs.forEach(input => {
+            input.addEventListener('change', () => {
+                if (input.value === 'fechado') {
+                    emailGroup.classList.remove('hidden');
+                    emailInput.required = true;
+                } else {
+                    emailGroup.classList.add('hidden');
+                    emailInput.required = false;
+                    emailInput.value = '';
+                    emailError.classList.remove('show');
+                }
+            });
+        });
+
+        // Toggle retroativo
+        retroativoCheckbox.addEventListener('change', () => {
+            if (retroativoCheckbox.checked) {
+                dataHoraGroup.classList.remove('hidden');
+                dataHoraInput.required = true;
+                retroativoStatus.textContent = '✓ Inserir data/hora manual';
+                retroativoStatus.style.color = 'var(--accent-red)';
+            } else {
+                dataHoraGroup.classList.add('hidden');
+                dataHoraInput.required = false;
+                dataHoraInput.value = '';
+                dataHoraError.classList.remove('show');
+                retroativoStatus.textContent = 'Usar horário atual';
+                retroativoStatus.style.color = 'var(--text-secondary)';
+            }
+        });
+
+        // FORM SUBMIT
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
-            
-            const operador = document.querySelector('input[name="operador"]:checked').value;
+
+            const vendedor = document.querySelector('input[name="vendedor"]:checked')?.value;
             const telefone = telefoneInput.value.replace(/\D/g, '');
-            
-            if (!operador) {
-                showMessage('❌ Selecione quem está usando!', 'error');
+            const tipo = document.querySelector('input[name="tipo"]:checked')?.value;
+            const email = emailInput.value;
+            const retroativo = retroativoCheckbox.checked;
+            const dataHora = dataHoraInput.value;
+
+            // Validations
+            if (!vendedor) {
+                showMessage('❌ Selecione quem é você no topo', 'error');
                 return;
             }
-            
+
+            if (!tipo) {
+                showMessage('❌ Selecione o tipo de registro (Potencial ou Fechado)!', 'error');
+                return;
+            }
+
             if (telefone.length < 13 || telefone.length > 14) {
-                showMessage('❌ Número de telefone inválido! Use o formato: 5511987654321', 'error');
+                showMessage('❌ Telefone inválido. Use: 55 11 98765-4321', 'error');
                 telefoneInput.classList.add('error');
                 return;
             }
-            
+
             if (!telefone.startsWith('55')) {
-                showMessage('❌ O número deve começar com 55 (código do Brasil)', 'error');
+                showMessage('❌ Telefone deve começar com 55', 'error');
                 telefoneInput.classList.add('error');
                 return;
             }
-            
+
+            if (tipo === 'fechado' && !email) {
+                showMessage('❌ E-mail obrigatório para Negócio Fechado', 'error');
+                emailInput.classList.add('error');
+                emailError.textContent = '✎ Digite o e-mail do cliente';
+                emailError.classList.add('show');
+                return;
+            }
+
+            if (tipo === 'fechado' && !email.includes('@')) {
+                showMessage('❌ E-mail inválido. Use: cliente@empresa.com', 'error');
+                emailInput.classList.add('error');
+                return;
+            }
+
+            if (retroativo && !dataHora) {
+                showMessage('❌ Data/hora obrigatória para retroativo', 'error');
+                dataHoraInput.classList.add('error');
+                return;
+            }
+
             loadingDiv.style.display = 'block';
-            
+
             try {
                 const response = await fetch(SCRIPT_URL, {
                     method: 'POST',
                     body: new URLSearchParams({
-                        operador: operador,
-                        telefone: telefone
+                        vendedor: vendedor,
+                        telefone: telefone,
+                        tipo: tipo,
+                        email: email || '',
+                        retroativo: retroativo,
+                        dataHora: dataHora || ''
                     })
                 });
-                
+
                 const data = await response.json();
-                
+
                 if (data.success) {
-                    showMessage(
-                        `✅ Sucesso!\n\nOperador: ${operador.charAt(0).toUpperCase() + operador.slice(1)}\nEvento: ${data.evento}\nTelefone: ${telefone}\n\nOs dados já estão na planilha!`,
-                        'success'
-                    );
+                    showMessage(`✓ ${data.message}`, 'success');
                     form.reset();
+                    emailGroup.classList.add('hidden');
+                    dataHoraGroup.classList.add('hidden');
                     telefoneInput.classList.remove('error');
-                    errorText.classList.remove('show');
+                    emailInput.classList.remove('error');
+                    dataHoraInput.classList.remove('error');
                 } else {
-                    showMessage('❌ ' + data.message, 'error');
+                    showMessage(`❌ ${data.message}`, 'error');
                 }
             } catch (error) {
-                showMessage('❌ Erro ao enviar. Verifique se a URL do Apps Script está correta.', 'error');
+                showMessage('❌ Erro ao enviar. Verifique a URL do Apps Script.', 'error');
                 console.error(error);
             } finally {
                 loadingDiv.style.display = 'none';
             }
         });
-        
+
         function showMessage(text, type) {
             messageDiv.textContent = text;
             messageDiv.className = `message ${type}`;
