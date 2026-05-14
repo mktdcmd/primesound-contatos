@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prime Sound - Meta Ads Data Capture</title>
-    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=Outfit:wght@700;800&display=swap" rel="stylesheet">
+    <title>Prime Sound - Meta Ads</title>
     <style>
         * {
             margin: 0;
@@ -13,30 +12,26 @@
         }
 
         :root {
-            --bg-primary: #0a0e17;
-            --bg-secondary: #131823;
-            --bg-tertiary: #1a1f2e;
-            --border-color: #262d3d;
-            --text-primary: #ffffff;
-            --text-secondary: #a8b2c1;
-            --text-tertiary: #757f8f;
-            --accent-red: #dc2626;
-            --accent-orange: #ea580c;
+            --primary: #0f172a;
+            --accent-gold: #d4af37;
+            --accent-green: #10b981;
+            --text-primary: #f8fafc;
+            --text-secondary: #cbd5e1;
+            --border: #334155;
             --success: #10b981;
             --error: #ef4444;
-        }
-
-        html {
-            scroll-behavior: smooth;
+            --warning: #f59e0b;
+            --surface: #1e293b;
         }
 
         body {
-            font-family: 'Sora', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 50%, var(--bg-primary) 100%);
-            min-height: 100vh;
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, var(--primary) 0%, #1a1f35 100%);
             color: var(--text-primary);
-            overflow-x: hidden;
+            min-height: 100vh;
+            padding: 20px;
             position: relative;
+            overflow-x: hidden;
         }
 
         body::before {
@@ -46,145 +41,30 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: 
-                radial-gradient(circle at 20% 50%, rgba(220, 38, 38, 0.05) 0%, transparent 50%),
-                radial-gradient(circle at 80% 80%, rgba(234, 88, 12, 0.03) 0%, transparent 50%);
+            background:
+                radial-gradient(circle at 20% 50%, rgba(212, 175, 55, 0.03) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(16, 185, 129, 0.02) 0%, transparent 50%);
             pointer-events: none;
-            z-index: -1;
+            z-index: 0;
         }
 
-        .login-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            padding: 20px;
-            animation: fadeIn 0.8s ease-out;
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
         }
 
-        .login-container.hidden {
-            display: none;
-        }
-
-        .login-card {
-            width: 100%;
-            max-width: 380px;
-            padding: 60px 40px;
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-color);
-            border-radius: 20px;
-            backdrop-filter: blur(20px);
-        }
-
-        .login-header {
+        .header {
             text-align: center;
             margin-bottom: 50px;
-        }
-
-        .logo-mark {
-            font-size: 48px;
-            margin-bottom: 16px;
-            opacity: 0.9;
-        }
-
-        .login-title {
-            font-family: 'Outfit', sans-serif;
-            font-size: 28px;
-            font-weight: 800;
-            letter-spacing: -1px;
-            margin-bottom: 8px;
-        }
-
-        .login-subtitle {
-            font-size: 13px;
-            color: var(--text-secondary);
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-
-        .login-input-group {
-            margin-bottom: 24px;
-        }
-
-        .login-input {
-            width: 100%;
-            padding: 14px 16px;
-            background: var(--bg-primary);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            color: var(--text-primary);
-            font-size: 15px;
-            font-family: 'Sora', sans-serif;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .login-input::placeholder {
-            color: var(--text-tertiary);
-        }
-
-        .login-input:focus {
-            outline: none;
-            border-color: var(--accent-red);
-            background: rgba(220, 38, 38, 0.03);
-            box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
-        }
-
-        .login-button {
-            width: 100%;
-            padding: 14px 16px;
-            background: linear-gradient(135deg, var(--accent-red) 0%, var(--accent-orange) 100%);
-            color: white;
-            border: none;
-            border-radius: 12px;
-            font-size: 15px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            letter-spacing: 0.5px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .login-button::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: rgba(255, 255, 255, 0.1);
-            transition: left 0.4s ease;
-        }
-
-        .login-button:hover::before {
-            left: 100%;
-        }
-
-        .login-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 12px 24px rgba(220, 38, 38, 0.25);
-        }
-
-        .login-error {
-            margin-top: 16px;
-            padding: 12px 14px;
-            background: rgba(239, 68, 68, 0.1);
-            border: 1px solid rgba(239, 68, 68, 0.3);
-            border-radius: 8px;
-            color: #fca5a5;
-            font-size: 13px;
-            display: none;
-            animation: slideDown 0.3s ease;
-        }
-
-        .login-error.show {
-            display: block;
+            animation: slideDown 0.6s ease-out;
         }
 
         @keyframes slideDown {
             from {
                 opacity: 0;
-                transform: translateY(-8px);
+                transform: translateY(-20px);
             }
             to {
                 opacity: 1;
@@ -192,63 +72,27 @@
             }
         }
 
-        .main-container {
-            display: none;
-            padding: 60px 20px;
-            animation: fadeIn 0.8s ease-out;
-        }
-
-        .main-container.active {
-            display: block;
-        }
-
-        .content-wrapper {
-            max-width: 520px;
-            margin: 0 auto;
-        }
-
-        .header-section {
-            text-align: center;
-            margin-bottom: 60px;
-            animation: slideUp 0.6s ease-out 0.2s both;
-        }
-
-        .header-logo {
-            font-size: 40px;
-            margin-bottom: 12px;
-        }
-
-        .header-title {
-            font-family: 'Outfit', sans-serif;
-            font-size: 32px;
-            font-weight: 800;
-            letter-spacing: -1.5px;
+        .logo-text {
+            font-size: 28px;
+            font-weight: 300;
+            letter-spacing: 2px;
             margin-bottom: 8px;
-        }
-
-        .header-title span {
-            background: linear-gradient(135deg, var(--accent-red), var(--accent-orange));
+            background: linear-gradient(135deg, var(--accent-gold) 0%, #e0c454 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
 
-        .header-subtitle {
-            font-size: 13px;
+        .tagline {
+            font-size: 12px;
             color: var(--text-secondary);
+            letter-spacing: 1px;
             text-transform: uppercase;
-            letter-spacing: 1.5px;
+            margin-bottom: 30px;
         }
 
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .login-screen, .app-screen {
+            animation: fadeIn 0.5s ease-out;
         }
 
         @keyframes fadeIn {
@@ -256,101 +100,24 @@
             to { opacity: 1; }
         }
 
-        .seller-selector {
-            margin-bottom: 60px;
-            animation: slideUp 0.6s ease-out 0.3s both;
-        }
-
-        .selector-label {
-            display: block;
-            font-size: 12px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: var(--text-secondary);
-            margin-bottom: 20px;
-        }
-
-        .seller-circles {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 16px;
-        }
-
-        .seller-circle {
-            position: relative;
-            width: 100%;
-            aspect-ratio: 1;
-        }
-
-        .seller-radio {
-            display: none;
-        }
-
-        .seller-radio:checked + .circle-button {
-            background: linear-gradient(135deg, var(--accent-red), var(--accent-orange));
-            border-color: var(--accent-red);
-            box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.15);
-        }
-
-        .seller-radio:checked + .circle-button .circle-label {
-            color: white;
-        }
-
-        .circle-button {
-            position: absolute;
-            inset: 0;
-            border: 2px solid var(--border-color);
-            border-radius: 50%;
-            background: var(--bg-tertiary);
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-            padding: 16px;
-        }
-
-        .seller-radio:not(:checked) + .circle-button:hover {
-            border-color: var(--accent-red);
-            background: rgba(220, 38, 38, 0.05);
-        }
-
-        .circle-icon {
-            font-size: 24px;
-        }
-
-        .circle-label {
-            font-size: 13px;
-            font-weight: 600;
-            color: var(--text-secondary);
-            transition: color 0.3s ease;
-            text-align: center;
-        }
-
-        .form-card {
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-color);
-            border-radius: 20px;
-            padding: 50px 40px;
-            animation: slideUp 0.6s ease-out 0.4s both;
-        }
-
         .form-group {
-            margin-bottom: 32px;
-            animation: slideInField 0.5s ease-out backwards;
+            margin-bottom: 24px;
+            animation: slideUp 0.5s ease-out forwards;
+            opacity: 0;
         }
 
-        .form-group:nth-child(1) { animation-delay: 0.5s; }
-        .form-group:nth-child(2) { animation-delay: 0.6s; }
-        .form-group:nth-child(3) { animation-delay: 0.7s; }
-        .form-group:nth-child(4) { animation-delay: 0.8s; }
+        .form-group:nth-child(1) { animation-delay: 0.1s; }
+        .form-group:nth-child(2) { animation-delay: 0.15s; }
+        .form-group:nth-child(3) { animation-delay: 0.2s; }
+        .form-group:nth-child(4) { animation-delay: 0.25s; }
+        .form-group:nth-child(5) { animation-delay: 0.3s; }
+        .form-group:nth-child(6) { animation-delay: 0.35s; }
+        .form-group:nth-child(7) { animation-delay: 0.4s; }
 
-        @keyframes slideInField {
+        @keyframes slideUp {
             from {
                 opacity: 0;
-                transform: translateY(12px);
+                transform: translateY(10px);
             }
             to {
                 opacity: 1;
@@ -358,665 +125,769 @@
             }
         }
 
-        .form-group.hidden {
-            display: none;
-        }
-
-        .form-label {
-            display: block;
-            font-size: 12px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: var(--text-secondary);
-            margin-bottom: 12px;
-        }
-
-        .form-input,
-        .form-select {
+        .input-field {
             width: 100%;
             padding: 14px 16px;
-            background: var(--bg-primary);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
             color: var(--text-primary);
-            font-size: 15px;
-            font-family: 'Sora', sans-serif;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-size: 14px;
+            transition: all 0.3s ease;
+            font-family: inherit;
         }
 
-        .form-input::placeholder {
-            color: var(--text-tertiary);
-        }
-
-        .form-input:focus,
-        .form-select:focus {
+        .input-field:focus {
             outline: none;
-            border-color: var(--accent-red);
-            background: rgba(220, 38, 38, 0.03);
-            box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
+            border-color: var(--accent-gold);
+            box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
         }
 
-        .form-input.error {
-            border-color: var(--error);
-            background: rgba(239, 68, 68, 0.05);
-        }
-
-        .form-input.error:focus {
-            box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
-            border-color: var(--error);
-        }
-
-        .form-helper {
-            display: block;
-            font-size: 12px;
-            color: var(--text-tertiary);
-            margin-top: 8px;
-            line-height: 1.5;
-        }
-
-        .form-helper.error {
-            color: #fca5a5;
-            display: none;
-        }
-
-        .form-helper.error.show {
-            display: block;
-        }
-
-        .radio-group {
-            display: grid;
-            gap: 12px;
-        }
-
-        .radio-option {
-            position: relative;
-            display: flex;
-            align-items: center;
-            padding: 14px 16px;
-            background: var(--bg-primary);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .radio-option:hover {
-            border-color: var(--accent-red);
-            background: rgba(220, 38, 38, 0.03);
-        }
-
-        .radio-option input[type="radio"] {
-            width: 16px;
-            height: 16px;
-            margin-right: 12px;
-            cursor: pointer;
-            accent-color: var(--accent-red);
-        }
-
-        .radio-option label {
-            margin: 0;
-            cursor: pointer;
-            font-size: 14px;
-            flex: 1;
-        }
-
-        .toggle-group {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-        }
-
-        .toggle-switch {
-            position: relative;
-            width: 48px;
-            height: 28px;
-            background: var(--bg-primary);
-            border: 1px solid var(--border-color);
-            border-radius: 14px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .toggle-switch input {
-            display: none;
-        }
-
-        .toggle-switch input:checked ~ .toggle-track {
-            background: linear-gradient(135deg, var(--accent-red), var(--accent-orange));
-            border-color: var(--accent-red);
-        }
-
-        .toggle-switch input:checked ~ .toggle-thumb {
-            left: 24px;
-        }
-
-        .toggle-track {
-            position: absolute;
-            inset: 0;
-            background: var(--bg-primary);
-            border: 1px solid var(--border-color);
-            border-radius: 14px;
-            transition: all 0.3s ease;
-        }
-
-        .toggle-thumb {
-            position: absolute;
-            width: 24px;
-            height: 24px;
-            background: white;
-            border-radius: 50%;
-            top: 1px;
-            left: 2px;
-            transition: left 0.3s ease;
-        }
-
-        .toggle-label {
-            font-size: 14px;
+        .input-field::placeholder {
             color: var(--text-secondary);
         }
 
-        .form-submit {
-            width: 100%;
-            padding: 16px 20px;
-            background: linear-gradient(135deg, var(--accent-red) 0%, var(--accent-orange) 100%);
-            color: white;
-            border: none;
-            border-radius: 12px;
-            font-size: 15px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        label {
+            display: block;
+            font-size: 12px;
+            font-weight: 500;
             letter-spacing: 0.5px;
-            margin-top: 20px;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+        }
+
+        .service-selector {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 30px;
+            justify-content: center;
+            animation: slideUp 0.5s ease-out 0.05s forwards;
+            opacity: 0;
+        }
+
+        .service-btn {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: 2px solid var(--border);
+            background: var(--surface);
+            color: var(--text-secondary);
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
             position: relative;
-            overflow: hidden;
         }
 
-        .form-submit::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: rgba(255, 255, 255, 0.1);
-            transition: left 0.4s ease;
+        .service-btn:hover {
+            border-color: var(--accent-gold);
+            color: var(--accent-gold);
         }
 
-        .form-submit:hover::before {
-            left: 100%;
+        .service-btn.active {
+            border-color: var(--accent-gold);
+            background: rgba(212, 175, 55, 0.1);
+            color: var(--accent-gold);
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.15);
         }
 
-        .form-submit:hover {
+        .button-group {
+            display: flex;
+            gap: 12px;
+            margin-top: 30px;
+        }
+
+        button {
+            flex: 1;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-family: inherit;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent-gold) 0%, #d4af37 100%);
+            color: var(--primary);
+        }
+
+        .btn-primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 12px 24px rgba(220, 38, 38, 0.25);
+            box-shadow: 0 8px 24px rgba(212, 175, 55, 0.3);
         }
 
-        .form-submit:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
+        .btn-secondary {
+            background: var(--surface);
+            color: var(--text-primary);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--accent-gold);
+            color: var(--accent-gold);
+        }
+
+        .btn-success {
+            background: var(--accent-green);
+            color: white;
+        }
+
+        .btn-success:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(16, 185, 129, 0.3);
         }
 
         .message {
-            margin-top: 24px;
             padding: 16px;
-            border-radius: 12px;
-            border-left: 4px solid;
-            display: none;
-            animation: slideDown 0.3s ease;
+            border-radius: 8px;
+            margin-bottom: 20px;
             font-size: 14px;
-            line-height: 1.5;
+            display: none;
+            animation: slideUp 0.3s ease-out;
         }
 
         .message.success {
             background: rgba(16, 185, 129, 0.1);
-            border-color: var(--success);
-            color: #86efac;
+            color: var(--success);
+            border: 1px solid rgba(16, 185, 129, 0.3);
             display: block;
         }
 
         .message.error {
             background: rgba(239, 68, 68, 0.1);
-            border-color: var(--error);
-            color: #fca5a5;
+            color: var(--error);
+            border: 1px solid rgba(239, 68, 68, 0.3);
             display: block;
         }
 
-        .loading {
+        .validation-hint {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-top: 6px;
             display: none;
+        }
+
+        .validation-hint.show {
+            display: block;
+        }
+
+        .validation-hint.error {
+            color: var(--error);
+        }
+
+        .validation-hint.success {
+            color: var(--success);
+        }
+
+        .retroactive-toggle {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .toggle-switch {
+            position: relative;
+            width: 50px;
+            height: 28px;
+            background: var(--border);
+            border-radius: 14px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .toggle-switch.active {
+            background: var(--accent-green);
+        }
+
+        .toggle-switch::after {
+            content: '';
+            position: absolute;
+            width: 24px;
+            height: 24px;
+            background: white;
+            border-radius: 50%;
+            top: 2px;
+            left: 2px;
+            transition: left 0.3s ease;
+        }
+
+        .toggle-switch.active::after {
+            left: 24px;
+        }
+
+        .toggle-label {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .full {
+            grid-column: 1 / -1;
+        }
+
+        .data-table {
+            margin-top: 40px;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+        }
+
+        .table-header {
+            background: var(--surface);
+            padding: 16px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-secondary);
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+        }
+
+        .table-row {
+            padding: 12px 16px;
+            border-top: 1px solid var(--border);
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            font-size: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .table-row.new {
+            background: rgba(16, 185, 129, 0.15);
+            border-left: 3px solid var(--accent-green);
+        }
+
+        .table-row:hover {
+            background: rgba(212, 175, 55, 0.05);
+        }
+
+        .table-cell {
+            color: var(--text-primary);
+            word-break: break-word;
+        }
+
+        .table-cell.secondary {
+            color: var(--text-secondary);
+            font-size: 11px;
+        }
+
+        .loading {
+            display: inline-block;
+            width: 4px;
+            height: 4px;
+            background: var(--accent-gold);
+            border-radius: 50%;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        .logout-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 8px 16px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            border-radius: 6px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+
+        .logout-btn:hover {
+            border-color: var(--accent-gold);
+            color: var(--accent-gold);
+        }
+
+        .info-text {
+            font-size: 12px;
+            color: var(--text-secondary);
             text-align: center;
             margin-top: 20px;
         }
 
-        .spinner {
-            width: 20px;
-            height: 20px;
-            border: 2px solid var(--border-color);
-            border-top-color: var(--accent-red);
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-            margin: 0 auto;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
         @media (max-width: 600px) {
-            .login-card {
-                padding: 40px 24px;
+            .row {
+                grid-template-columns: 1fr;
             }
 
-            .form-card {
-                padding: 40px 24px;
-            }
-
-            .header-title {
-                font-size: 28px;
-            }
-
-            .seller-circles {
-                grid-template-columns: repeat(3, 1fr);
+            .service-selector {
                 gap: 12px;
             }
 
-            .circle-label {
+            .service-btn {
+                width: 90px;
+                height: 90px;
                 font-size: 12px;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+
+            .table-header,
+            .table-row {
+                grid-template-columns: repeat(2, 1fr);
             }
         }
     </style>
 </head>
 <body>
-    <!-- LOGIN SCREEN -->
-    <div class="login-container" id="loginContainer">
-        <div class="login-card">
-            <div class="login-header">
-                <div class="logo-mark">🎵</div>
-                <h1 class="login-title">PRIME<span style="color: #dc2626;">SOUND</span></h1>
-                <p class="login-subtitle">Meta Ads System</p>
+    <div class="container">
+        <!-- LOGIN SCREEN -->
+        <div id="loginScreen" class="login-screen">
+            <div class="header">
+                <div class="logo-text">PRIME SOUND</div>
+                <div class="tagline">Meta Ads Manager</div>
             </div>
 
             <form id="loginForm">
-                <div class="login-input-group">
+                <div class="form-group">
+                    <label for="authCode">Código de Autenticação</label>
                     <input
                         type="password"
-                        id="codigoInput"
-                        class="login-input"
-                        placeholder="Código de acesso"
+                        id="authCode"
+                        class="input-field"
+                        placeholder="Digite o código"
                         required
                     >
+                    <div class="validation-hint">Código de 8 caracteres</div>
                 </div>
-                <button type="submit" class="login-button">Acessar</button>
-                <div class="login-error" id="loginError"></div>
+
+                <div class="button-group">
+                    <button type="submit" class="btn-primary">Acessar</button>
+                </div>
+
+                <div id="loginMessage" class="message"></div>
             </form>
+
+            <div class="info-text">
+                Entre com o código fornecido para acessar o sistema
+            </div>
         </div>
-    </div>
 
-    <!-- MAIN SCREEN -->
-    <div class="main-container" id="mainContainer">
-        <div class="content-wrapper">
-            <div class="header-section">
-                <div class="header-logo">🎵</div>
-                <h1 class="header-title">PRIME<span>SOUND</span></h1>
-                <p class="header-subtitle">Meta Ads Data Capture</p>
+        <!-- APP SCREEN -->
+        <div id="appScreen" class="app-screen hidden">
+            <button class="logout-btn" onclick="logout()">Sair</button>
+
+            <div class="header">
+                <div class="logo-text">PRIME SOUND</div>
+                <div class="tagline">Conversões Meta Ads</div>
             </div>
 
-            <!-- SELLER SELECTOR -->
-            <div class="seller-selector">
-                <label class="selector-label">Quem é você?</label>
-                <div class="seller-circles">
-                    <div class="seller-circle">
-                        <input type="radio" id="ricardo" name="vendedor" value="ricardo" class="seller-radio" required>
-                        <label for="ricardo" class="circle-button">
-                            <span class="circle-icon">R</span>
-                            <span class="circle-label">Ricardo</span>
-                        </label>
-                    </div>
-                    <div class="seller-circle">
-                        <input type="radio" id="rogerio" name="vendedor" value="rogerio" class="seller-radio">
-                        <label for="rogerio" class="circle-button">
-                            <span class="circle-icon">Ro</span>
-                            <span class="circle-label">Rogério</span>
-                        </label>
-                    </div>
-                    <div class="seller-circle">
-                        <input type="radio" id="jessica" name="vendedor" value="jessica" class="seller-radio">
-                        <label for="jessica" class="circle-button">
-                            <span class="circle-icon">J</span>
-                            <span class="circle-label">Jéssica</span>
-                        </label>
-                    </div>
-                </div>
-            </div>
-
-            <!-- FORM -->
-            <form id="form" class="form-card">
-                <!-- TIPO DE REGISTRO -->
+            <form id="dataForm">
+                <!-- Service Selector -->
                 <div class="form-group">
-                    <label class="form-label">Tipo de Registro</label>
-                    <div class="radio-group">
-                        <div class="radio-option">
-                            <input type="radio" id="tipo-potencial" name="tipo" value="potencial" required>
-                            <label for="tipo-potencial">Potencial (Lead)</label>
-                        </div>
-                        <div class="radio-option">
-                            <input type="radio" id="tipo-fechado" name="tipo" value="fechado">
-                            <label for="tipo-fechado">Negócio Fechado (Purchase)</label>
-                        </div>
+                    <label>Selecionar Serviço</label>
+                    <div class="service-selector">
+                        <button type="button" class="service-btn active" data-service="Pelicula">
+                            PELÍCULA
+                        </button>
+                        <button type="button" class="service-btn" data-service="PPF">
+                            PPF
+                        </button>
                     </div>
                 </div>
 
-                <!-- TELEFONE -->
-                <div class="form-group">
-                    <label class="form-label">Telefone do Cliente</label>
+                <!-- Retroactive Toggle -->
+                <div class="form-group full">
+                    <label>Quando ocorreu a conversão?</label>
+                    <div class="retroactive-toggle">
+                        <div class="toggle-switch active" id="toggleRetroactive"></div>
+                        <span class="toggle-label" id="toggleLabel">Agora</span>
+                    </div>
+                </div>
+
+                <!-- Date/Time fields (hidden by default) -->
+                <div id="dateTimeFields" class="hidden">
+                    <div class="form-group full">
+                        <label for="eventDate">Data da Conversão</label>
+                        <input
+                            type="date"
+                            id="eventDate"
+                            class="input-field"
+                        >
+                        <div class="validation-hint">Formato: DD/MM/AAAA</div>
+                    </div>
+
+                    <div class="form-group full">
+                        <label for="eventTime">Hora da Conversão</label>
+                        <input
+                            type="time"
+                            id="eventTime"
+                            class="input-field"
+                        >
+                        <div class="validation-hint">Formato: HH:MM</div>
+                    </div>
+                </div>
+
+                <!-- Phone -->
+                <div class="form-group full">
+                    <label for="phone">Telefone</label>
                     <input
                         type="tel"
-                        id="telefone"
-                        class="form-input"
-                        placeholder="+55 11 98765-4321 ou +1 (555) 123-4567"
+                        id="phone"
+                        class="input-field"
+                        placeholder="+55 11 99999-9999"
                         required
                     >
-                    <span class="form-helper">Formato internacional: +código país DDD número</span>
-                    <span class="form-helper error" id="telefoneError"></span>
+                    <div class="validation-hint">Ex: +55 11 99999-9999 ou (11) 99999-9999</div>
                 </div>
 
-                <!-- EMAIL (CONDICIONAL) -->
-                <div class="form-group hidden" id="emailGroup">
-                    <label class="form-label">E-mail do Cliente</label>
+                <!-- Event Type Selector -->
+                <div class="form-group full">
+                    <label for="eventType">Tipo de Evento</label>
+                    <select id="eventType" class="input-field" required>
+                        <option value="">Selecione um tipo</option>
+                        <option value="Lead">Lead (Interesse)</option>
+                        <option value="Purchase">Purchase (Venda)</option>
+                    </select>
+                    <div class="validation-hint">Lead = interesse, Purchase = venda concluída</div>
+                </div>
+
+                <!-- Email (only for Purchase) -->
+                <div class="form-group full hidden" id="emailField">
+                    <label for="email">Email</label>
                     <input
                         type="email"
                         id="email"
-                        class="form-input"
-                        placeholder="cliente@exemplo.com"
+                        class="input-field"
+                        placeholder="seu@email.com"
                     >
-                    <span class="form-helper">Aumenta Match Rate na Meta</span>
-                    <span class="form-helper error" id="emailError"></span>
+                    <div class="validation-hint">Email válido para conversão de compra</div>
                 </div>
 
-                <!-- LANÇAMENTO RETROATIVO -->
+                <!-- First Name -->
                 <div class="form-group">
-                    <label class="form-label">Lançamento Retroativo</label>
-                    <div class="toggle-group">
-                        <div class="toggle-switch">
-                            <input type="checkbox" id="retroativo" name="retroativo">
-                            <div class="toggle-track"></div>
-                            <div class="toggle-thumb"></div>
-                        </div>
-                        <span class="toggle-label" id="retroativoStatus">Usar horário atual</span>
-                    </div>
-                </div>
-
-                <!-- DATA/HORA (CONDICIONAL) -->
-                <div class="form-group hidden" id="dataHoraGroup">
-                    <label class="form-label">Data e Hora</label>
+                    <label for="firstName">Primeiro Nome</label>
                     <input
-                        type="datetime-local"
-                        id="dataHora"
-                        class="form-input"
+                        type="text"
+                        id="firstName"
+                        class="input-field"
+                        placeholder="João"
                     >
-                    <span class="form-helper">Formato: AAAA-MM-DD HH:MM</span>
-                    <span class="form-helper error" id="dataHoraError"></span>
                 </div>
 
-                <button type="submit" class="form-submit">Enviar Registro</button>
-
-                <div class="loading" id="loading">
-                    <div class="spinner"></div>
+                <!-- Last Name -->
+                <div class="form-group">
+                    <label for="lastName">Sobrenome</label>
+                    <input
+                        type="text"
+                        id="lastName"
+                        class="input-field"
+                        placeholder="Silva"
+                    >
                 </div>
 
-                <div class="message" id="message"></div>
+                <!-- Country (read-only Brazil) -->
+                <div class="form-group full">
+                    <label for="country">País</label>
+                    <input
+                        type="text"
+                        id="country"
+                        class="input-field"
+                        value="Brasil"
+                        disabled
+                    >
+                </div>
+
+                <div id="formMessage" class="message"></div>
+
+                <div class="button-group">
+                    <button type="submit" class="btn-success">Registrar Conversão</button>
+                    <button type="reset" class="btn-secondary">Limpar</button>
+                </div>
             </form>
+
+            <!-- Data Table -->
+            <div class="data-table">
+                <div class="table-header">
+                    <div>Telefone</div>
+                    <div>Tipo</div>
+                    <div>Serviço</div>
+                    <div>Horário</div>
+                </div>
+                <div id="tableBody"></div>
+            </div>
         </div>
     </div>
 
     <script>
-        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxlTvH-F8ENibzn_vEQYgHWJUnqu6d8r0tyl8h_w_9EAteDhu67X0WsM5pjde1q41nBTw/exec';
-        const CODIGO_CORRETO = 'vendas2026';
+        const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxlTvH-F8ENibzn_vEQYgHWJUnqu6d8r0tyl8h_w_9EAteDhu67X0WsM5pjde1q41nBTw/exec';
+        const AUTH_CODE = 'vendas2026';
 
-        // DDDs válidos brasileiros
-        const DDDS_BRASILEIROS = ['11', '12', '13', '14', '15', '16', '17', '18', '19', '21', '22', '24', '27', '28', '31', '32', '33', '34', '35', '37', '38', '41', '42', '43', '44', '45', '46', '47', '48', '49', '51', '53', '54', '55', '61', '62', '64', '63', '65', '66', '67', '68', '69', '71', '73', '74', '75', '77', '79', '82', '83', '84', '85', '86', '87', '88', '89', '91', '92', '93', '94', '95', '96', '97', '98', '99'];
+        let selectedService = 'Pelicula';
+        let isRetroactive = false;
+        let allRecords = [];
 
-        // Elements
-        const loginContainer = document.getElementById('loginContainer');
-        const mainContainer = document.getElementById('mainContainer');
-        const loginForm = document.getElementById('loginForm');
-        const codigoInput = document.getElementById('codigoInput');
-        const loginError = document.getElementById('loginError');
-
-        const form = document.getElementById('form');
-        const vendedorInputs = document.querySelectorAll('input[name="vendedor"]');
-        const tipoInputs = document.querySelectorAll('input[name="tipo"]');
-        const telefoneInput = document.getElementById('telefone');
-        const telefoneError = document.getElementById('telefoneError');
-        const emailGroup = document.getElementById('emailGroup');
-        const emailInput = document.getElementById('email');
-        const emailError = document.getElementById('emailError');
-        const retroativoCheckbox = document.getElementById('retroativo');
-        const retroativoStatus = document.getElementById('retroativoStatus');
-        const dataHoraGroup = document.getElementById('dataHoraGroup');
-        const dataHoraInput = document.getElementById('dataHora');
-        const dataHoraError = document.getElementById('dataHoraError');
-        const messageDiv = document.getElementById('message');
-        const loadingDiv = document.getElementById('loading');
-
-        // Check session on load
-        window.addEventListener('load', () => {
-            if (sessionStorage.getItem('primesound_auth') === 'true') {
-                showMainScreen();
-            }
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            checkAuth();
+            setupEventListeners();
         });
 
-        // LOGIN
-        loginForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            if (codigoInput.value === CODIGO_CORRETO) {
-                sessionStorage.setItem('primesound_auth', 'true');
-                showMainScreen();
+        function checkAuth() {
+            const token = sessionStorage.getItem('primesound_auth');
+            if (token === 'true') {
+                showApp();
             } else {
-                loginError.textContent = '❌ Código incorreto. Tente novamente.';
-                loginError.classList.add('show');
-                codigoInput.value = '';
-                codigoInput.focus();
+                showLogin();
             }
-        });
-
-        function showMainScreen() {
-            loginContainer.classList.add('hidden');
-            mainContainer.classList.add('active');
-            codigoInput.value = '';
         }
 
-        // Phone mask e validação internacional
-        telefoneInput.addEventListener('input', (e) => {
-            let value = e.target.value.replace(/\D/g, '');
-            
-            if (value.length === 0) {
-                e.target.value = '';
-                telefoneError.classList.remove('show');
-                return;
-            }
+        function showLogin() {
+            document.getElementById('loginScreen').classList.remove('hidden');
+            document.getElementById('appScreen').classList.add('hidden');
+        }
 
-            // Detectar se é Brasil (55) ou outro país
-            if (value.startsWith('55')) {
-                // Brasil - validar DDD
-                const ddd = value.substring(2, 4);
-                const numero = value.substring(4);
+        function showApp() {
+            document.getElementById('loginScreen').classList.add('hidden');
+            document.getElementById('appScreen').classList.remove('hidden');
+            loadRecords();
+        }
 
-                if (value.length > 14) value = value.slice(0, 14);
+        function setupEventListeners() {
+            // Login form
+            document.getElementById('loginForm').addEventListener('submit', (e) => {
+                e.preventDefault();
+                const code = document.getElementById('authCode').value;
 
-                if (value.length <= 2) {
-                    e.target.value = value;
-                } else if (value.length <= 4) {
-                    e.target.value = value.slice(0, 2) + ' ' + value.slice(2);
-                } else if (value.length <= 9) {
-                    e.target.value = value.slice(0, 2) + ' ' + value.slice(2, 4) + ' ' + value.slice(4);
+                if (code === AUTH_CODE) {
+                    sessionStorage.setItem('primesound_auth', 'true');
+                    showApp();
                 } else {
-                    e.target.value = value.slice(0, 2) + ' ' + value.slice(2, 4) + ' ' + value.slice(4, 9) + '-' + value.slice(9);
-                }
-
-                // Validar DDD brasileiro
-                if (ddd && !DDDS_BRASILEIROS.includes(ddd)) {
-                    telefoneError.textContent = `ℹ️ DDD ${ddd} não é válido no Brasil`;
-                    telefoneError.classList.add('show');
-                    telefoneInput.classList.add('error');
-                } else if (value.length >= 13) {
-                    telefoneError.classList.remove('show');
-                    telefoneInput.classList.remove('error');
-                } else if (value.length > 0 && value.length < 13) {
-                    telefoneError.textContent = `ℹ️ Faltam ${13 - value.length} dígitos`;
-                    telefoneError.classList.add('show');
-                    telefoneInput.classList.add('error');
-                }
-            } else {
-                // Outros países - apenas manter máximo de 15 dígitos
-                if (value.length > 15) value = value.slice(0, 15);
-                e.target.value = '+' + value;
-                
-                if (value.length >= 10) {
-                    telefoneError.classList.remove('show');
-                    telefoneInput.classList.remove('error');
-                } else {
-                    telefoneError.textContent = 'ℹ️ Digite um número válido';
-                    telefoneError.classList.add('show');
-                    telefoneInput.classList.add('error');
-                }
-            }
-        });
-
-        // Show/hide email
-        tipoInputs.forEach(input => {
-            input.addEventListener('change', () => {
-                if (input.value === 'fechado') {
-                    emailGroup.classList.remove('hidden');
-                    emailInput.required = true;
-                } else {
-                    emailGroup.classList.add('hidden');
-                    emailInput.required = false;
-                    emailInput.value = '';
-                    emailError.classList.remove('show');
+                    showMessage('loginMessage', 'Código inválido', 'error');
+                    document.getElementById('authCode').value = '';
                 }
             });
-        });
 
-        // Toggle retroativo - CORRIGIDO
-        retroativoCheckbox.addEventListener('change', () => {
-            if (retroativoCheckbox.checked) {
-                dataHoraGroup.classList.remove('hidden');
-                dataHoraInput.required = true;
-                retroativoStatus.textContent = '✓ Inserir data/hora manual';
-                retroativoStatus.style.color = 'var(--accent-red)';
+            // Service selector
+            document.querySelectorAll('.service-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    document.querySelectorAll('.service-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    selectedService = btn.dataset.service;
+                });
+            });
+
+            // Retroactive toggle
+            document.getElementById('toggleRetroactive').addEventListener('click', (e) => {
+                e.preventDefault();
+                isRetroactive = !isRetroactive;
+                const toggle = document.getElementById('toggleRetroactive');
+                const label = document.getElementById('toggleLabel');
+                const dateTimeFields = document.getElementById('dateTimeFields');
+
+                toggle.classList.toggle('active');
+                label.textContent = isRetroactive ? 'Data específica' : 'Agora';
+                dateTimeFields.classList.toggle('hidden');
+            });
+
+            // Event type change
+            document.getElementById('eventType').addEventListener('change', (e) => {
+                const emailField = document.getElementById('emailField');
+                if (e.target.value === 'Purchase') {
+                    emailField.classList.remove('hidden');
+                    document.getElementById('email').required = true;
+                } else {
+                    emailField.classList.add('hidden');
+                    document.getElementById('email').required = false;
+                    document.getElementById('email').value = '';
+                }
+            });
+
+            // Data form submission
+            document.getElementById('dataForm').addEventListener('submit', async (e) => {
+                e.preventDefault();
+                await submitForm();
+            });
+
+            // Phone validation
+            document.getElementById('phone').addEventListener('blur', validatePhone);
+        }
+
+        function validatePhone() {
+            const phone = document.getElementById('phone').value;
+            const hint = document.querySelector('#phone').parentElement.querySelector('.validation-hint');
+
+            // Remove non-digits for validation
+            const digits = phone.replace(/\D/g, '');
+
+            // Check if it's a valid Brazilian number
+            if (digits.length >= 10) {
+                hint.textContent = '✓ Telefone válido';
+                hint.classList.add('success');
+                hint.classList.remove('error');
+                hint.classList.add('show');
+                return true;
+            } else if (digits.length > 0) {
+                hint.textContent = '✗ Telefone incompleto';
+                hint.classList.remove('success');
+                hint.classList.add('error');
+                hint.classList.add('show');
+                return false;
+            }
+            hint.classList.remove('show');
+            return false;
+        }
+
+        async function submitForm() {
+            if (!validatePhone()) {
+                showMessage('formMessage', 'Telefone inválido', 'error');
+                return;
+            }
+
+            const eventType = document.getElementById('eventType').value;
+            if (!eventType) {
+                showMessage('formMessage', 'Selecione o tipo de evento', 'error');
+                return;
+            }
+
+            if (eventType === 'Purchase' && !document.getElementById('email').value) {
+                showMessage('formMessage', 'Email é obrigatório para Purchase', 'error');
+                return;
+            }
+
+            const phone = document.getElementById('phone').value.replace(/\D/g, '');
+            let eventDateTime;
+
+            if (isRetroactive) {
+                const date = document.getElementById('eventDate').value;
+                const time = document.getElementById('eventTime').value;
+
+                if (!date || !time) {
+                    showMessage('formMessage', 'Data e hora são obrigatórias', 'error');
+                    return;
+                }
+
+                eventDateTime = new Date(`${date}T${time}`);
             } else {
-                dataHoraGroup.classList.add('hidden');
-                dataHoraInput.required = false;
-                dataHoraInput.value = '';
-                dataHoraError.classList.remove('show');
-                retroativoStatus.textContent = 'Usar horário atual';
-                retroativoStatus.style.color = 'var(--text-secondary)';
-            }
-        });
-
-        // FORM SUBMIT
-        form.addEventListener('submit', async (e) => {
-            e.preventDefault();
-
-            const vendedor = document.querySelector('input[name="vendedor"]:checked')?.value;
-            const telefone = telefoneInput.value.replace(/\D/g, '');
-            const tipo = document.querySelector('input[name="tipo"]:checked')?.value;
-            const email = emailInput.value;
-            const retroativo = retroativoCheckbox.checked;
-            const dataHora = dataHoraInput.value;
-
-            // Validations
-            if (!vendedor) {
-                showMessage('❌ Selecione quem é você no topo', 'error');
-                return;
+                eventDateTime = new Date();
             }
 
-            if (!tipo) {
-                showMessage('❌ Selecione o tipo de registro (Potencial ou Fechado)!', 'error');
-                return;
-            }
-
-            // Validar telefone
-            if (telefone.length < 10) {
-                showMessage('❌ Telefone inválido', 'error');
-                telefoneInput.classList.add('error');
-                return;
-            }
-
-            // Validar DDD se Brasil
-            if (telefone.startsWith('55')) {
-                if (telefone.length < 13 || telefone.length > 14) {
-                    showMessage('❌ Telefone brasileiro deve ter 13-14 dígitos', 'error');
-                    telefoneInput.classList.add('error');
-                    return;
-                }
-                const ddd = telefone.substring(2, 4);
-                if (!DDDS_BRASILEIROS.includes(ddd)) {
-                    showMessage(`❌ DDD ${ddd} inválido`, 'error');
-                    return;
-                }
-            }
-
-            if (tipo === 'fechado' && !email) {
-                showMessage('❌ E-mail obrigatório para Negócio Fechado', 'error');
-                emailInput.classList.add('error');
-                emailError.textContent = '✎ Digite o e-mail do cliente';
-                emailError.classList.add('show');
-                return;
-            }
-
-            if (tipo === 'fechado' && !email.includes('@')) {
-                showMessage('❌ E-mail inválido', 'error');
-                emailInput.classList.add('error');
-                return;
-            }
-
-            if (retroativo && !dataHora) {
-                showMessage('❌ Data/hora obrigatória para retroativo', 'error');
-                dataHoraInput.classList.add('error');
-                return;
-            }
-
-            loadingDiv.style.display = 'block';
+            const data = {
+                phone: phone,
+                email: document.getElementById('email').value || '',
+                event_time: eventDateTime.toISOString(),
+                event_name: document.getElementById('eventType').value,
+                service: selectedService,
+                firstName: document.getElementById('firstName').value,
+                lastName: document.getElementById('lastName').value,
+                country: 'Brasil'
+            };
 
             try {
-                const response = await fetch(SCRIPT_URL, {
+                const response = await fetch(APPS_SCRIPT_URL, {
                     method: 'POST',
-                    body: new URLSearchParams({
-                        vendedor: vendedor,
-                        telefone: telefone,
-                        tipo: tipo,
-                        email: email || '',
-                        retroativo: retroativo,
-                        dataHora: dataHora || ''
-                    })
+                    body: JSON.stringify(data),
+                    mode: 'no-cors'
                 });
 
-                const data = await response.json();
+                showMessage('formMessage', 'Registro enviado com sucesso!', 'success');
+                document.getElementById('dataForm').reset();
+                document.getElementById('eventType').value = '';
+                document.getElementById('emailField').classList.add('hidden');
 
-                if (data.success) {
-                    showMessage('✓ Registro enviado com sucesso!', 'success');
-                    form.reset();
-                    emailGroup.classList.add('hidden');
-                    dataHoraGroup.classList.add('hidden');
-                    telefoneInput.classList.remove('error');
-                    emailInput.classList.remove('error');
-                    dataHoraInput.classList.remove('error');
-                } else {
-                    showMessage(`❌ ${data.message}`, 'error');
+                setTimeout(() => {
+                    loadRecords();
+                }, 1000);
+            } catch (error) {
+                showMessage('formMessage', 'Erro ao enviar: ' + error.message, 'error');
+            }
+        }
+
+        async function loadRecords() {
+            try {
+                const response = await fetch(APPS_SCRIPT_URL + '?action=getRecords', {
+                    method: 'GET'
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    allRecords = data.records || [];
+                    renderTable();
                 }
             } catch (error) {
-                showMessage('❌ Erro ao enviar. Verifique a conexão.', 'error');
-                console.error(error);
-            } finally {
-                loadingDiv.style.display = 'none';
+                console.error('Error loading records:', error);
             }
-        });
+        }
 
-        function showMessage(text, type) {
-            messageDiv.textContent = text;
-            messageDiv.className = `message ${type}`;
+        function renderTable() {
+            const tableBody = document.getElementById('tableBody');
+            tableBody.innerHTML = '';
+
+            allRecords.slice().reverse().forEach((record, index) => {
+                const isNew = index < 3; // Highlight last 3 as new
+                const row = document.createElement('div');
+                row.className = `table-row ${isNew ? 'new' : ''}`;
+
+                const time = new Date(record.event_time).toLocaleTimeString('pt-BR', {
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+
+                row.innerHTML = `
+                    <div class="table-cell">${record.phone}</div>
+                    <div class="table-cell">${record.event_name}</div>
+                    <div class="table-cell">${record.service}</div>
+                    <div class="table-cell secondary">${time}</div>
+                `;
+
+                tableBody.appendChild(row);
+            });
+        }
+
+        function showMessage(elementId, message, type) {
+            const element = document.getElementById(elementId);
+            element.textContent = message;
+            element.className = `message ${type}`;
+
+            if (type === 'success') {
+                setTimeout(() => {
+                    element.className = 'message';
+                }, 3000);
+            }
+        }
+
+        function logout() {
+            sessionStorage.removeItem('primesound_auth');
+            document.getElementById('authCode').value = '';
+            showLogin();
         }
     </script>
 </body>
