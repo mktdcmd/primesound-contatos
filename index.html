@@ -12,36 +12,33 @@
         }
 
         :root {
-            --bg:       #0a0a0a;
-            --surface:  #141414;
-            --surface2: #1d1d1d;
-            --border:   rgba(255,255,255,0.06);
-            --border2:  rgba(255,255,255,0.1);
+            --bg:       #0d0d0d;
+            --surface:  #1a1a1a;
+            --surface2: #222222;
+            --border:   rgba(255,255,255,0.08);
+            --border2:  rgba(255,255,255,0.14);
             --accent:   #DC2626;
             --accent-h: #b91c1c;
-            --accent-g: rgba(220,38,38,0.15);
-            --ok:       #10b981;
-            --ok-bg:    rgba(16,185,129,0.08);
-            --ok-bd:    rgba(16,185,129,0.2);
+            --accent-g: rgba(220,38,38,0.18);
+            --ok:       #22c55e;
+            --ok-bg:    rgba(34,197,94,0.09);
+            --ok-bd:    rgba(34,197,94,0.16);
             --err:      #ef4444;
-            --err-bg:   rgba(239,68,68,0.08);
-            --err-bd:   rgba(239,68,68,0.2);
-            --t1:  #f8fafc;
-            --t2:  rgba(248,250,252,0.6);
-            --t3:  rgba(248,250,252,0.35);
-            --r:   14px;
-            --r-lg: 20px;
+            --err-bg:   rgba(239,68,68,0.09);
+            --err-bd:   rgba(239,68,68,0.16);
+            --t1:  #ffffff;
+            --t2:  rgba(255,255,255,0.5);
+            --t3:  rgba(255,255,255,0.25);
+            --r:   12px;
+            --r-lg: 18px;
             --r-pill: 999px;
         }
 
-        html, body {
-            background: var(--bg);
-            background-image: radial-gradient(ellipse 800px 600px at 50% -200px, rgba(220,38,38,0.08) 0%, transparent 70%);
-            background-attachment: fixed;
-        }
+        html, body { background: var(--bg); }
 
         body {
-            font-family: -apple-system, 'SF Pro Display', 'SF Pro Text', BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
+            font-family: -apple-system, 'SF Pro Display', 'SF Pro Text',
+                         BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
             color: var(--t1);
             min-height: 100dvh;
             display: flex;
@@ -52,72 +49,82 @@
             -moz-osx-font-smoothing: grayscale;
         }
 
+        body::after {
+            content: '';
+            position: fixed;
+            top: -200px; left: 50%;
+            transform: translateX(-50%);
+            width: 600px; height: 400px;
+            background: radial-gradient(ellipse, rgba(220,38,38,0.06) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
         .container {
             width: 100%;
             max-width: 420px;
             position: relative;
             z-index: 1;
-            padding: 0 16px;
+            padding: 0 20px;
         }
 
-        /* ════ LOGIN ════ */
+        /* LOGIN */
         #loginScreen {
-            animation: fadeUp .6s cubic-bezier(.16,1,.3,1) both;
-            padding-top: 14vh;
+            animation: fadeUp .5s cubic-bezier(.16,1,.3,1) both;
+            padding-top: 12vh;
         }
 
-        @media (max-height: 700px) { #loginScreen { padding-top: 8vh; } }
+        @media (max-height: 700px) { #loginScreen { padding-top: 6vh; } }
 
         .login-logo-area {
             text-align: center;
-            margin-bottom: 52px;
+            margin-bottom: 48px;
         }
 
         .login-logo-area img {
             height: 90px;
             width: auto;
             object-fit: contain;
-            margin-bottom: 12px;
+            margin-bottom: 8px;
         }
 
         .login-logo-area .logo-text-fallback {
-            font-size: 32px;
+            font-size: 28px;
             font-weight: 700;
-            letter-spacing: 2px;
+            letter-spacing: 4px;
             color: var(--t1);
             text-transform: uppercase;
             display: none;
-            margin-bottom: 12px;
+            margin-bottom: 8px;
         }
 
         .login-tagline {
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 500;
-            letter-spacing: 2px;
+            letter-spacing: 2.5px;
             text-transform: uppercase;
             color: var(--t3);
+            margin-top: 14px;
         }
 
-        /* ════ APP HEADER ════ */
+        /* APP HEADER */
         #appScreen {
-            animation: fadeUp .5s cubic-bezier(.16,1,.3,1) both;
-            padding-top: 48px;
+            animation: fadeUp .4s cubic-bezier(.16,1,.3,1) both;
+            padding-top: 52px;
         }
 
         .app-header {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 36px;
-            gap: 12px;
+            margin-bottom: 32px;
+            gap: 16px;
         }
 
-        .app-logo-section {
+        .app-logo {
             display: flex;
             align-items: center;
             gap: 12px;
-            flex: 1;
-            min-width: 0;
         }
 
         .app-logo img {
@@ -125,30 +132,28 @@
             width: auto;
             object-fit: contain;
             display: block;
-            flex-shrink: 0;
         }
 
         .app-logo .logo-text-fallback {
-            font-size: 18px;
+            font-size: 16px;
             font-weight: 700;
-            letter-spacing: 2px;
+            letter-spacing: 3px;
             color: var(--t1);
             text-transform: uppercase;
             display: none;
-            flex-shrink: 0;
         }
 
         .app-label {
             font-size: 10px;
             font-weight: 600;
-            letter-spacing: 1.5px;
+            letter-spacing: 2px;
             text-transform: uppercase;
             color: var(--t3);
+            margin-top: 4px;
         }
 
-        .app-header-actions {
+        .header-actions {
             display: flex;
-            align-items: center;
             gap: 8px;
             flex-shrink: 0;
         }
@@ -170,385 +175,10 @@
 
         .btn-header:hover {
             color: var(--t1);
-            border-color: rgba(255,255,255,.18);
-            background: rgba(255,255,255,.03);
+            border-color: rgba(255,255,255,.25);
         }
 
-        /* ════ CARD ════ */
-        .card {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: var(--r-lg);
-            padding: 28px 22px 24px;
-            margin-bottom: 20px;
-            backdrop-filter: blur(10px);
-        }
-
-        /* ════ SERVICE CHIPS ════ */
-        .service-row {
-            display: flex;
-            gap: 12px;
-            margin-bottom: 24px;
-        }
-
-        .svc-chip {
-            flex: 1;
-            padding: 15px 14px;
-            border-radius: var(--r-pill);
-            border: 1px solid var(--border2);
-            background: rgba(255,255,255,.02);
-            color: var(--t2);
-            font-size: 14px;
-            font-weight: 600;
-            font-family: inherit;
-            cursor: pointer;
-            text-align: center;
-            letter-spacing: .2px;
-            transition: all .2s cubic-bezier(.16,1,.3,1);
-            user-select: none;
-        }
-
-        .svc-chip:hover {
-            background: rgba(255,255,255,.06);
-            color: var(--t1);
-            border-color: var(--border2);
-        }
-
-        .svc-chip.on {
-            background: var(--accent);
-            border-color: var(--accent);
-            color: #fff;
-            box-shadow: 0 8px 24px var(--accent-g);
-        }
-
-        /* ════ TOGGLE ════ */
-        .toggle-block {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 16px 18px;
-            background: rgba(255,255,255,.02);
-            border: 1px solid var(--border);
-            border-radius: var(--r);
-            cursor: pointer;
-            user-select: none;
-            margin-bottom: 20px;
-            transition: all .15s;
-        }
-
-        .toggle-block:hover {
-            background: rgba(255,255,255,.04);
-            border-color: var(--border2);
-        }
-
-        .toggle-left {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-        }
-
-        .toggle-title {
-            font-size: 14px;
-            font-weight: 500;
-            color: var(--t1);
-        }
-
-        .toggle-sub {
-            font-size: 11px;
-            color: var(--t2);
-        }
-
-        .sw {
-            width: 48px;
-            height: 28px;
-            background: rgba(255,255,255,.1);
-            border-radius: 14px;
-            position: relative;
-            flex-shrink: 0;
-            transition: background .2s;
-        }
-
-        .sw.on {
-            background: var(--accent);
-        }
-
-        .sw::after {
-            content: '';
-            position: absolute;
-            width: 24px;
-            height: 24px;
-            background: #fff;
-            border-radius: 50%;
-            top: 2px;
-            left: 2px;
-            transition: transform .2s cubic-bezier(.16,1,.3,1);
-            box-shadow: 0 2px 8px rgba(0,0,0,.3);
-        }
-
-        .sw.on::after {
-            transform: translateX(20px);
-        }
-
-        /* ════ FIELDS ════ */
-        .sep {
-            height: 1px;
-            background: var(--border);
-            margin: 22px 0 20px;
-        }
-
-        .field {
-            margin-bottom: 18px;
-            position: relative;
-        }
-
-        .lbl {
-            display: flex;
-            align-items: baseline;
-            gap: 6px;
-            font-size: 11px;
-            font-weight: 600;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            color: var(--t2);
-            margin-bottom: 8px;
-        }
-
-        .opt {
-            font-weight: 400;
-            text-transform: none;
-            letter-spacing: 0;
-            font-size: 10px;
-            color: var(--t3);
-        }
-
-        .inp {
-            width: 100%;
-            padding: 14px 15px;
-            background: rgba(255,255,255,.02);
-            border: 1px solid var(--border);
-            border-radius: var(--r);
-            color: var(--t1);
-            font-size: 15px;
-            font-family: inherit;
-            transition: all .15s;
-            appearance: none;
-            -webkit-appearance: none;
-        }
-
-        .inp:focus {
-            outline: none;
-            border-color: rgba(220,38,38,.5);
-            background: rgba(255,255,255,.03);
-            box-shadow: 0 0 0 4px rgba(220,38,38,.08);
-        }
-
-        .inp::placeholder {
-            color: var(--t3);
-        }
-
-        .inp.err {
-            border-color: rgba(239,68,68,.4);
-            box-shadow: 0 0 0 3px rgba(239,68,68,.06);
-        }
-
-        .inp.ok {
-            border-color: rgba(16,185,129,.3);
-        }
-
-        select.inp {
-            cursor: pointer;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5.5L11 1' stroke='rgba(248,250,252,.4)' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: right 14px center;
-            padding-right: 38px;
-        }
-
-        .hint {
-            font-size: 11px;
-            color: var(--t3);
-            margin-top: 6px;
-            line-height: 1.5;
-            display: none;
-        }
-
-        .hint.show {
-            display: block;
-        }
-
-        .hint.err {
-            color: var(--err);
-            display: block;
-        }
-
-        .hint.ok {
-            color: var(--ok);
-            display: block;
-        }
-
-        .row-2 {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 14px;
-        }
-
-        @media (max-width: 360px) {
-            .row-2 {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        /* ════ PASSWORD TOGGLE ════ */
-        .password-wrapper {
-            position: relative;
-        }
-
-        .toggle-pwd-btn {
-            position: absolute;
-            right: 12px;
-            top: 50%;
-            transform: translateY(-50%);
-            background: none;
-            border: none;
-            color: var(--t3);
-            cursor: pointer;
-            padding: 6px;
-            transition: color .15s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .toggle-pwd-btn:hover {
-            color: var(--t1);
-        }
-
-        .pwd-input {
-            padding-right: 42px;
-        }
-
-        /* ════ MULTIPLE PHONES ════ */
-        .phone-fields-container {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .phone-field-wrapper {
-            display: flex;
-            gap: 8px;
-            align-items: flex-end;
-        }
-
-        .phone-field-wrapper .field {
-            flex: 1;
-            margin-bottom: 0;
-        }
-
-        .btn-remove-phone {
-            background: none;
-            border: 1px solid var(--border2);
-            color: var(--t3);
-            width: 40px;
-            height: 40px;
-            border-radius: var(--r);
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 18px;
-            transition: all .15s;
-            flex-shrink: 0;
-        }
-
-        .btn-remove-phone:hover {
-            color: var(--err);
-            border-color: rgba(239,68,68,.2);
-            background: rgba(239,68,68,.06);
-        }
-
-        .btn-add-phone {
-            font-size: 13px;
-            color: var(--accent);
-            background: transparent;
-            border: 1px solid var(--accent);
-            border-radius: var(--r);
-            padding: 10px 14px;
-            cursor: pointer;
-            transition: all .15s;
-            font-weight: 500;
-            width: 100%;
-            margin-top: 8px;
-        }
-
-        .btn-add-phone:hover {
-            background: var(--accent-g);
-            border-color: var(--accent);
-        }
-
-        .btn-add-phone.disabled {
-            opacity: .5;
-            cursor: not-allowed;
-        }
-
-        .max-phones-hint {
-            font-size: 11px;
-            color: var(--t3);
-            margin-top: 8px;
-            text-align: center;
-        }
-
-        /* ════ CLEAR CONFIRMATION ════ */
-        .clear-confirmation {
-            display: none;
-            gap: 8px;
-            margin-top: 12px;
-            animation: slideUp .2s cubic-bezier(.16,1,.3,1) both;
-        }
-
-        .clear-confirmation.show {
-            display: flex;
-        }
-
-        .btn-confirm-clear {
-            flex: 1;
-            background: var(--err);
-            color: #fff;
-            border: none;
-            border-radius: var(--r);
-            padding: 10px 14px;
-            font-size: 12px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all .15s;
-            font-family: inherit;
-        }
-
-        .btn-confirm-clear:hover {
-            background: #dc2626;
-            box-shadow: 0 4px 16px rgba(239,68,68,.25);
-        }
-
-        .btn-cancel-clear {
-            flex: 1;
-            background: transparent;
-            color: var(--t2);
-            border: 1px solid var(--border2);
-            border-radius: var(--r);
-            padding: 10px 14px;
-            font-size: 12px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all .15s;
-            font-family: inherit;
-        }
-
-        .btn-cancel-clear:hover {
-            color: var(--t1);
-            border-color: var(--border2);
-            background: rgba(255,255,255,.03);
-        }
-
-        /* ════ INSTRUCTIONS PANEL ════ */
+        /* INSTRUCTIONS PANEL */
         .instructions-overlay {
             display: none;
             position: fixed;
@@ -649,43 +279,300 @@
             margin-bottom: 6px;
         }
 
-        /* ════ MESSAGES ════ */
-        .msg {
-            display: none;
+        /* CARD */
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--r-lg);
+            padding: 24px 20px 20px;
+            margin-bottom: 16px;
+        }
+
+        /* SERVICE CHIPS */
+        .service-row {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 22px;
+        }
+
+        .svc-chip {
+            flex: 1;
+            padding: 14px 12px;
+            border-radius: var(--r-pill);
+            border: 1px solid var(--border2);
+            background: var(--surface2);
+            color: var(--t2);
+            font-size: 14px;
+            font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
+            text-align: center;
+            letter-spacing: .2px;
+            transition: all .2s cubic-bezier(.16,1,.3,1);
+            user-select: none;
+        }
+
+        .svc-chip:hover {
+            background: #2a2a2a;
+            color: var(--t1);
+        }
+
+        .svc-chip.on {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: #fff;
+            box-shadow: 0 4px 20px var(--accent-g);
+        }
+
+        /* TOGGLE */
+        .toggle-block {
+            display: flex;
             align-items: center;
-            gap: 11px;
+            justify-content: space-between;
             padding: 14px 16px;
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: var(--r);
+            cursor: pointer;
+            user-select: none;
+            margin-bottom: 18px;
+            transition: background .15s;
+        }
+
+        .toggle-block:hover { background: #252525; }
+
+        .toggle-left { display: flex; flex-direction: column; gap: 3px; }
+        .toggle-title { font-size: 14px; font-weight: 500; color: var(--t1); }
+        .toggle-sub { font-size: 11.5px; color: var(--t2); }
+
+        .sw {
+            width: 44px; height: 26px;
+            background: rgba(255,255,255,.12);
+            border-radius: 13px;
+            position: relative;
+            flex-shrink: 0;
+            transition: background .2s;
+        }
+
+        .sw.on { background: var(--accent); }
+
+        .sw::after {
+            content: '';
+            position: absolute;
+            width: 22px; height: 22px;
+            background: #fff;
+            border-radius: 50%;
+            top: 2px; left: 2px;
+            transition: transform .2s cubic-bezier(.16,1,.3,1);
+            box-shadow: 0 1px 5px rgba(0,0,0,.4);
+        }
+
+        .sw.on::after { transform: translateX(18px); }
+
+        /* FIELDS */
+        .sep { height: 1px; background: var(--border); margin: 20px 0 18px; }
+
+        .field { margin-bottom: 16px; }
+
+        .lbl {
+            display: flex;
+            align-items: baseline;
+            gap: 5px;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--t2);
+            margin-bottom: 7px;
+        }
+
+        .opt {
+            font-weight: 400;
+            text-transform: none;
+            letter-spacing: 0;
+            font-size: 10.5px;
+            color: var(--t3);
+        }
+
+        .inp {
+            width: 100%;
+            padding: 13px 14px;
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: var(--r);
+            color: var(--t1);
+            font-size: 15px;
+            font-family: inherit;
+            transition: border-color .15s, box-shadow .15s, background .15s;
+            appearance: none;
+            -webkit-appearance: none;
+        }
+
+        .inp:focus {
+            outline: none;
+            border-color: rgba(220,38,38,.4);
+            background: #252525;
+            box-shadow: 0 0 0 3px rgba(220,38,38,.07);
+        }
+
+        .inp::placeholder { color: var(--t3); }
+        .inp.err { border-color: rgba(239,68,68,.45); box-shadow: 0 0 0 3px rgba(239,68,68,.07); }
+        .inp.ok { border-color: rgba(34,197,94,.35); }
+
+        select.inp {
+            cursor: pointer;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='7' viewBox='0 0 11 7'%3E%3Cpath d='M1 1l4.5 4.5L10 1' stroke='rgba(255,255,255,.25)' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 14px center;
+            padding-right: 36px;
+        }
+
+        .hint {
+            font-size: 11.5px;
+            color: var(--t3);
+            margin-top: 5px;
+            line-height: 1.5;
+            display: none;
+        }
+
+        .hint.show { display: block; }
+        .hint.err { color: var(--err); display: block; }
+        .hint.ok { color: var(--ok); display: block; }
+
+        .hint-add-phone {
+            font-size: 11px;
+            color: var(--t3);
+            margin-top: 8px;
+            padding: 8px 12px;
+            background: rgba(255,255,255,.02);
+            border-left: 2px solid var(--accent);
+            display: none;
+        }
+
+        .hint-add-phone.show { display: block; }
+
+        .phone-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+
+        .phone-wrapper {
+            display: flex;
+            gap: 8px;
+            align-items: flex-end;
+        }
+
+        .phone-wrapper .field {
+            flex: 1;
+            margin-bottom: 0;
+        }
+
+        .btn-remove-phone {
+            width: 40px;
+            height: 40px;
+            padding: 0;
+            border: 1px solid var(--border2);
+            background: transparent;
+            color: var(--t3);
+            border-radius: var(--r);
+            cursor: pointer;
+            font-size: 18px;
+            transition: all .15s;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-remove-phone:hover {
+            color: var(--err);
+            border-color: rgba(239,68,68,.2);
+            background: rgba(239,68,68,.06);
+        }
+
+        .btn-add-phone {
+            margin-top: 10px;
+            padding: 10px 14px;
+            border: 1px solid var(--accent);
+            background: transparent;
+            color: var(--accent);
             border-radius: var(--r);
             font-size: 13px;
             font-weight: 500;
+            font-family: inherit;
+            cursor: pointer;
+            width: 100%;
+            transition: all .15s;
+            display: none;
+        }
+
+        .btn-add-phone.show { display: block; }
+
+        .btn-add-phone:hover {
+            background: rgba(220,38,38,.08);
+        }
+
+        .btn-add-phone.disabled {
+            opacity: .5;
+            cursor: not-allowed;
+        }
+
+        .row-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        @media (max-width: 360px) { .row-2 { grid-template-columns: 1fr; } }
+
+        /* PASSWORD TOGGLE */
+        .password-wrapper {
+            position: relative;
+        }
+
+        .toggle-pwd-btn {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--t3);
+            cursor: pointer;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: color .15s;
+        }
+
+        .toggle-pwd-btn:hover { color: var(--t1); }
+
+        .pwd-input { padding-right: 40px; }
+
+        /* MESSAGES */
+        .msg {
+            display: none;
+            align-items: center;
+            gap: 10px;
+            padding: 13px 15px;
+            border-radius: var(--r);
+            font-size: 13.5px;
+            font-weight: 500;
             line-height: 1.4;
-            margin-bottom: 16px;
+            margin-bottom: 14px;
             animation: slideUp .25s cubic-bezier(.16,1,.3,1) both;
         }
 
-        .msg.show {
-            display: flex;
-        }
+        .msg.show { display: flex; }
+        .msg.success { background: var(--ok-bg); color: var(--ok); border: 1px solid var(--ok-bd); }
+        .msg.error { background: var(--err-bg); color: var(--err); border: 1px solid var(--err-bd); }
+        .msg.loading { background: rgba(255,255,255,.04); color: var(--t2); border: 1px solid var(--border); }
 
-        .msg.success {
-            background: var(--ok-bg);
-            color: var(--ok);
-            border: 1px solid var(--ok-bd);
-        }
-
-        .msg.error {
-            background: var(--err-bg);
-            color: var(--err);
-            border: 1px solid var(--err-bd);
-        }
-
-        .msg.loading {
-            background: rgba(255,255,255,.04);
-            color: var(--t2);
-            border: 1px solid var(--border);
-        }
-
-        /* ════ BUTTONS ════ */
+        /* BUTTONS */
         .btn {
             border: none;
             border-radius: var(--r);
@@ -697,7 +584,7 @@
             align-items: center;
             justify-content: center;
             gap: 8px;
-            padding: 16px 24px;
+            padding: 15px 22px;
             letter-spacing: .1px;
             transition: all .2s cubic-bezier(.16,1,.3,1);
             white-space: nowrap;
@@ -711,65 +598,107 @@
 
         .btn-primary:hover:not(:disabled) {
             background: var(--accent-h);
-            box-shadow: 0 8px 28px var(--accent-g);
-            transform: translateY(-2px);
+            box-shadow: 0 6px 22px var(--accent-g);
+            transform: translateY(-1px);
         }
 
-        .btn-primary:active:not(:disabled) {
-            transform: none;
-            box-shadow: none;
-        }
-
-        .btn-primary:disabled {
-            opacity: .5;
-            cursor: not-allowed;
-        }
+        .btn-primary:active:not(:disabled) { transform: none; box-shadow: none; }
+        .btn-primary:disabled { opacity: .5; cursor: not-allowed; }
 
         .btn-secondary {
-            background: rgba(255,255,255,.04);
+            background: var(--surface2);
             color: var(--t2);
             border: 1px solid var(--border);
             flex: 1;
         }
 
-        .btn-secondary:hover {
-            background: rgba(255,255,255,.06);
-            color: var(--t1);
-            border-color: var(--border2);
-        }
+        .btn-secondary:hover { background: #2a2a2a; color: var(--t1); border-color: var(--border2); }
 
-        .btn-row {
-            display: flex;
-            gap: 12px;
-            margin-top: 10px;
-        }
+        .btn-row { display: flex; gap: 10px; margin-top: 8px; }
+        .btn-row .btn-primary { flex: 2; width: auto; }
 
-        .btn-row .btn-primary {
-            flex: 2;
-            width: auto;
-        }
+        .login-btn-wrap { margin-top: 6px; }
 
-        .login-btn-wrap {
-            margin-top: 8px;
-        }
-
-        /* Spinner */
         .spin {
-            width: 16px;
-            height: 16px;
-            border: 2.5px solid rgba(255,255,255,.2);
+            width: 16px; height: 16px;
+            border: 2px solid rgba(255,255,255,.22);
             border-top-color: #fff;
             border-radius: 50%;
             animation: rot .65s linear infinite;
             flex-shrink: 0;
         }
 
-        /* ════ RECORDS ════ */
+        /* CLEAR CONFIRMATION */
+        .clear-confirmation {
+            display: none;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: 12px;
+            padding: 10px 12px;
+            background: rgba(255,255,255,.02);
+            border: 1px solid var(--border);
+            border-radius: var(--r);
+            animation: slideUp .2s cubic-bezier(.16,1,.3,1) both;
+        }
+
+        .clear-confirmation.show { display: flex; }
+
+        .clear-confirmation-text {
+            font-size: 11px;
+            color: var(--t3);
+            margin-bottom: 4px;
+        }
+
+        .clear-confirmation-buttons {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn-confirm-clear {
+            flex: 1;
+            background: var(--accent);
+            color: #fff;
+            border: none;
+            border-radius: var(--r);
+            padding: 10px 12px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all .15s;
+            font-family: inherit;
+        }
+
+        .btn-confirm-clear:hover {
+            background: var(--accent-h);
+            box-shadow: 0 4px 12px rgba(220,38,38,.25);
+        }
+
+        .btn-cancel-clear {
+            flex: 1;
+            background: transparent;
+            color: var(--t2);
+            border: 1px solid var(--border2);
+            border-radius: var(--r);
+            padding: 10px 12px;
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all .15s;
+            font-family: inherit;
+        }
+
+        .btn-cancel-clear:hover {
+            color: var(--t1);
+            border-color: var(--border2);
+            background: rgba(255,255,255,.03);
+        }
+
+        /* RECORDS */
         .rec-header {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 14px;
+            margin-bottom: 12px;
             gap: 10px;
         }
 
@@ -800,16 +729,13 @@
             background: transparent;
             border: 1px solid var(--border);
             border-radius: var(--r-pill);
-            padding: 5px 12px;
+            padding: 4px 11px;
             cursor: pointer;
             transition: all .15s;
             letter-spacing: .2px;
         }
 
-        .btn-clear-rec:hover {
-            color: var(--err);
-            border-color: rgba(239,68,68,.3);
-        }
+        .btn-clear-rec:hover { color: var(--err); border-color: rgba(239,68,68,.3); }
 
         .rec-list {
             border-radius: var(--r);
@@ -821,22 +747,17 @@
         }
 
         .rec-row {
-            background: var(--surface2);
-            padding: 14px 16px;
+            background: #141414;
+            padding: 13px 16px;
             display: flex;
             align-items: center;
             justify-content: space-between;
             gap: 10px;
-            transition: all .12s;
+            transition: background .12s;
         }
 
-        .rec-row:hover {
-            background: rgba(255,255,255,.05);
-        }
-
-        .rec-row.fresh {
-            background: rgba(16,185,129,.08);
-        }
+        .rec-row:hover { background: #1c1c1c; }
+        .rec-row.fresh { background: rgba(34,197,94,.06); }
 
         .rec-phone {
             font-size: 13px;
@@ -853,42 +774,31 @@
         .rec-meta {
             display: flex;
             align-items: center;
-            gap: 7px;
+            gap: 6px;
             flex-shrink: 0;
         }
 
         .chip {
             font-size: 10px;
             font-weight: 700;
-            padding: 4px 9px;
+            padding: 3px 8px;
             border-radius: 6px;
             letter-spacing: .3px;
             text-transform: uppercase;
         }
 
-        .chip-lead {
-            background: rgba(220,38,38,.14);
-            color: #f87171;
-        }
-
-        .chip-sale {
-            background: rgba(16,185,129,.14);
-            color: #4ade80;
-        }
-
-        .chip-svc {
-            background: rgba(255,255,255,.08);
-            color: var(--t2);
-        }
+        .chip-lead { background: rgba(220,38,38,.14); color: #f87171; }
+        .chip-sale { background: rgba(34,197,94,.14); color: #4ade80; }
+        .chip-svc { background: rgba(255,255,255,.07); color: var(--t2); }
 
         .rec-time {
-            font-size: 10px;
+            font-size: 10.5px;
             color: var(--t3);
             font-variant-numeric: tabular-nums;
         }
 
         .empty {
-            padding: 44px 20px;
+            padding: 40px 20px;
             text-align: center;
             color: var(--t3);
             font-size: 13px;
@@ -897,7 +807,7 @@
             border: 1px solid var(--border);
         }
 
-        /* ════ FOOTER ════ */
+        /* FOOTER */
         .app-footer {
             text-align: center;
             margin-top: 40px;
@@ -921,29 +831,13 @@
             color: var(--accent-h);
         }
 
-        /* ════ ANIMATIONS ════ */
-        @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(16px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        /* ANIMATIONS */
+        @keyframes fadeUp { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
+        @keyframes fadeIn { from{opacity:0} to{opacity:1} }
+        @keyframes slideUp { from{opacity:0;transform:translateY(6px)} to{opacity:1;transform:translateY(0)} }
+        @keyframes rot { to{transform:rotate(360deg)} }
 
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(8px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes rot {
-            to { transform: rotate(360deg); }
-        }
-
-        .hidden {
-            display: none !important;
-        }
+        .hidden { display: none !important; }
     </style>
 </head>
 <body>
@@ -952,7 +846,7 @@
     <!-- LOGIN -->
     <div id="loginScreen">
         <div class="login-logo-area">
-            <img src="logo invertido sem fundo.png" alt="Prime Sound" 
+            <img src="logo invertido sem fundo.png" alt="Prime Sound"
                  onerror="this.style.display='none';this.nextElementSibling.style.display='block';">
             <div class="logo-text-fallback">PRIME SOUND</div>
             <div class="login-tagline">Registro de Leads</div>
@@ -962,9 +856,9 @@
             <div class="field">
                 <label class="lbl" for="authCode">Código de Acesso</label>
                 <div class="password-wrapper">
-                    <input type="password" id="authCode" class="inp pwd-input" 
+                    <input type="password" id="authCode" class="inp pwd-input"
                            placeholder="••••••••" required autocomplete="current-password">
-                    <button type="button" id="togglePwd" class="toggle-pwd-btn" onclick="togglePasswordVisibility()">
+                    <button type="button" class="toggle-pwd-btn" onclick="togglePasswordVisibility()" tabindex="-1">
                         <svg id="eyeIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
                             <circle cx="12" cy="12" r="3"></circle>
@@ -986,28 +880,26 @@
 
         <!-- Header -->
         <div class="app-header">
-            <div class="app-logo-section">
-                <div class="app-logo">
-                    <img src="logo invertido sem fundo.png" alt="Prime Sound"
-                         onerror="this.style.display='none';this.nextElementSibling.style.display='block';">
-                    <div class="logo-text-fallback">PRIME SOUND</div>
-                </div>
+            <div class="app-logo">
+                <img src="logo invertido sem fundo.png" alt="Prime Sound"
+                     onerror="this.style.display='none';this.nextElementSibling.style.display='block';">
+                <div class="logo-text-fallback">PRIME SOUND</div>
                 <div class="app-label">Registro de Leads</div>
             </div>
-            <div class="app-header-actions">
+            <div class="header-actions">
                 <button type="button" class="btn-header" onclick="toggleInstructions()">Como usar</button>
                 <button type="button" class="btn-header" onclick="logout()">Sair</button>
             </div>
         </div>
 
         <!-- Instructions Panel -->
-        <div id="instructionsOverlay" class="instructions-overlay" onclick="event.target === this && toggleInstructions()">
+        <div id="instructionsOverlay" class="instructions-overlay" onclick="if(event.target===this) toggleInstructions()">
             <div class="instructions-panel">
-                <button class="instructions-close" onclick="toggleInstructions()">×</button>
+                <button type="button" class="instructions-close" onclick="toggleInstructions()" tabindex="-1">×</button>
                 <h2 class="instructions-title">Como usar o CRM Light</h2>
-                
+
                 <div class="instructions-section">
-                    <div class="instructions-section-title">Passo a passo rápido</div>
+                    <div class="instructions-section-title">Passo a passo</div>
                     <ol class="instructions-list">
                         <li>Selecione o serviço (Película ou PPF)</li>
                         <li>Escolha o tipo de evento (Lead ou Purchase)</li>
@@ -1028,9 +920,16 @@
                 </div>
 
                 <div class="instructions-section">
+                    <div class="instructions-section-title">Qualidade dos contatos</div>
+                    <div class="instructions-text">
+                        Registre apenas contatos com real potencial — pessoas que demonstraram interesse genuíno e têm condições de fechar o serviço. Evite registrar curiosos ou pessoas sem perfil para o serviço, pois isso prejudica a qualidade dos dados no Meta Ads e reduz o retorno das campanhas.
+                    </div>
+                </div>
+
+                <div class="instructions-section">
                     <div class="instructions-section-title">Múltiplos contatos</div>
                     <div class="instructions-text">
-                        Para Lead, você pode adicionar vários contatos de uma vez usando o botão "+ Adicionar contato". Máximo 10 contatos por envio.
+                        Para Lead, você pode registrar vários contatos de uma vez usando o botão "+ Adicionar contato". Máximo 10 contatos por envio.
                     </div>
                 </div>
             </div>
@@ -1066,7 +965,7 @@
                         <div class="field" style="margin-bottom:0">
                             <label class="lbl" for="eventTime">Hora</label>
                             <input type="time" id="eventTime" class="inp">
-                            <div class="hint show">Formato 24h</div>
+                            <div class="hint show">Formato 24h — Ex: 14:30</div>
                         </div>
                     </div>
                 </div>
@@ -1075,15 +974,15 @@
 
                 <!-- Phones -->
                 <div>
-                    <label class="lbl">Telefone</label>
-                    <div class="phone-fields-container" id="phoneFieldsContainer">
+                    <label class="lbl" for="phone">Telefone</label>
+                    <div class="phone-container" id="phoneContainer">
                         <div class="field" style="margin-bottom:0">
-                            <input type="tel" class="inp phone-input" placeholder="+55 11 99999-9999" required>
-                            <div class="hint show">Ex: +55 11 99999-9999 ou (11) 99999-9999</div>
+                            <input type="tel" id="phone" class="inp phone-input" placeholder="5511987654321" required>
+                            <div class="hint show" id="phoneHint">Código do país (55) + DDD + número. Ex: 5511987654321</div>
                         </div>
                     </div>
+                    <div class="hint-add-phone" id="hintAddPhone">Precisa registrar mais de um contato? Use o botão abaixo.</div>
                     <button type="button" class="btn-add-phone" id="btnAddPhone" onclick="addPhoneField()">+ Adicionar contato</button>
-                    <div class="max-phones-hint hidden" id="maxPhonesHint">Limite de 10 contatos atingido</div>
                 </div>
 
                 <!-- Event Type -->
@@ -1146,11 +1045,14 @@
                 <span class="rec-title">Registros Recentes</span>
                 <div class="rec-actions">
                     <span class="rec-count" id="recordsCount"></span>
-                    <button class="btn-clear-rec hidden" id="btnClearRec" onclick="toggleClearConfirmation()">Limpar lista</button>
-                    <div class="clear-confirmation" id="clearConfirmation">
-                        <button class="btn-confirm-clear" onclick="confirmClear()">Confirmar</button>
-                        <button class="btn-cancel-clear" onclick="cancelClear()">Cancelar</button>
-                    </div>
+                    <button type="button" class="btn-clear-rec hidden" id="btnClearRec" onclick="toggleClearConfirmation()" title="Remove apenas a visualização dos registros nesta tela. Os contatos enviados permanecem salvos com segurança na planilha e não serão excluídos.">Limpar registros da tela</button>
+                </div>
+            </div>
+            <div class="clear-confirmation" id="clearConfirmation">
+                <div class="clear-confirmation-text">Os registros enviados permanecem salvos. Esta ação remove apenas a exibição nesta tela.</div>
+                <div class="clear-confirmation-buttons">
+                    <button type="button" class="btn-confirm-clear" onclick="confirmClear()">Limpar visualização</button>
+                    <button type="button" class="btn-cancel-clear" onclick="cancelClear()">Cancelar</button>
                 </div>
             </div>
             <div id="tableBody"></div>
@@ -1168,13 +1070,14 @@
 </div>
 
 <script>
-    const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxgM6pNt4gPszlr8E2O_6fDDMDOYTgwPIXDbfYvmXfW13u2t9Z72mjkLpWnVAtnjqQ/exec';
+    const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxgM6pNt4gPszlr8E2O_6fDDMDOYTgwPZIgIXDbfYvmXfW13u2t9Z72mjkLpWnVAtnjqQ/exec';
     const AUTH_CODE = 'vendas2026';
     const MAX_PHONES = 10;
 
     let selectedService = 'Pelicula';
     let isRetroactive = false;
-    let allRecords = [];
+    let localRecords = [];
+    let clearedOnce = false;
     let isSubmitting = false;
 
     document.addEventListener('DOMContentLoaded', () => { checkAuth(); setupListeners(); });
@@ -1216,8 +1119,7 @@
 
     /* INSTRUCTIONS */
     function toggleInstructions() {
-        const overlay = document.getElementById('instructionsOverlay');
-        overlay.classList.toggle('show');
+        document.getElementById('instructionsOverlay').classList.toggle('show');
     }
 
     /* LISTENERS */
@@ -1256,15 +1158,27 @@
             document.getElementById('emailField').classList.toggle('hidden', !isPurchase);
             document.getElementById('email').required = isPurchase;
             if (!isPurchase) document.getElementById('email').value = '';
-            
-            const btnAddPhone = document.getElementById('btnAddPhone');
+
+            const hintAdd = document.getElementById('hintAddPhone');
+            const btnAdd = document.getElementById('btnAddPhone');
             if (isPurchase) {
                 trimPhoneFields(1);
-                btnAddPhone.classList.add('hidden');
+                hintAdd.classList.remove('show');
+                btnAdd.classList.remove('show');
             } else {
-                btnAddPhone.classList.remove('hidden');
+                hintAdd.classList.add('show');
                 updateAddPhoneButton();
             }
+        });
+
+        document.getElementById('phone').addEventListener('blur', validatePhone);
+
+        ['firstName', 'lastName'].forEach(id => {
+            document.getElementById(id).addEventListener('blur', () => {
+                const el = document.getElementById(id);
+                if (el.value.trim()) el.value = capitalFirst(el.value.trim());
+                validateName(id);
+            });
         });
 
         document.getElementById('dataForm').addEventListener('submit', async e => {
@@ -1279,25 +1193,25 @@
 
     /* PHONE FIELDS */
     function addPhoneField() {
-        const container = document.getElementById('phoneFieldsContainer');
+        const container = document.getElementById('phoneContainer');
         if (container.children.length >= MAX_PHONES) return;
 
         const wrapper = document.createElement('div');
-        wrapper.className = 'phone-field-wrapper';
-        
+        wrapper.className = 'phone-wrapper';
+
         const fieldDiv = document.createElement('div');
         fieldDiv.className = 'field';
-        
+
         const input = document.createElement('input');
         input.type = 'tel';
         input.className = 'inp phone-input';
         input.placeholder = '+55 11 99999-9999';
         input.addEventListener('blur', function() { validatePhoneField(this); });
-        
+
         const hint = document.createElement('div');
         hint.className = 'hint show';
         hint.textContent = 'Ex: +55 11 99999-9999 ou (11) 99999-9999';
-        
+
         fieldDiv.appendChild(input);
         fieldDiv.appendChild(hint);
 
@@ -1315,7 +1229,7 @@
     }
 
     function trimPhoneFields(count) {
-        const container = document.getElementById('phoneFieldsContainer');
+        const container = document.getElementById('phoneContainer');
         while (container.children.length > count) {
             container.removeChild(container.lastChild);
         }
@@ -1323,23 +1237,19 @@
     }
 
     function updateAddPhoneButton() {
-        const container = document.getElementById('phoneFieldsContainer');
+        const container = document.getElementById('phoneContainer');
         const btn = document.getElementById('btnAddPhone');
-        const hint = document.getElementById('maxPhonesHint');
-        
         if (container.children.length >= MAX_PHONES) {
             btn.classList.add('disabled');
-            hint.classList.remove('hidden');
         } else {
             btn.classList.remove('disabled');
-            hint.classList.add('hidden');
         }
     }
 
     function validatePhoneField(input) {
         const digits = input.value.replace(/\D/g, '');
         const hint = input.parentElement.querySelector('.hint');
-        if (digits.length >= 10) {
+        if (digits.length === 13 && digits.startsWith('55')) {
             input.classList.add('ok');
             input.classList.remove('err');
             hint.textContent = 'Telefone válido';
@@ -1347,11 +1257,11 @@
         } else if (digits.length > 0) {
             input.classList.add('err');
             input.classList.remove('ok');
-            hint.textContent = 'Incompleto — mínimo 10 dígitos';
+            hint.textContent = 'Formato incorreto — Digite: 55 + DDD + número. Ex: 5511987654321';
             hint.className = 'hint err';
         } else {
             input.classList.remove('err', 'ok');
-            hint.textContent = 'Ex: +55 11 99999-9999 ou (11) 99999-9999';
+            hint.textContent = 'Código do país (55) + DDD + número. Ex: 5511987654321';
             hint.className = 'hint show';
         }
     }
@@ -1361,19 +1271,19 @@
         const phones = [];
         inputs.forEach(inp => {
             const digits = inp.value.replace(/\D/g, '');
-            if (digits.length >= 10) phones.push(digits);
+            if (digits.length === 13 && digits.startsWith('55')) phones.push(digits);
         });
         return phones;
     }
 
     /* CLEAR RECORDS */
     function toggleClearConfirmation() {
-        const confirmation = document.getElementById('clearConfirmation');
-        confirmation.classList.toggle('show');
+        document.getElementById('clearConfirmation').classList.toggle('show');
     }
 
     function confirmClear() {
-        allRecords = [];
+        localRecords = [];
+        clearedOnce = true;
         renderTable();
         document.getElementById('clearConfirmation').classList.remove('show');
     }
@@ -1383,9 +1293,7 @@
     }
 
     /* HELPERS */
-    function capitalFirst(s) {
-        return s ? s.charAt(0).toUpperCase() + s.slice(1) : s;
-    }
+    function capitalFirst(s) { return s ? s.charAt(0).toUpperCase() + s.slice(1) : s; }
 
     function isCapitalized(s) {
         if (!s) return true;
@@ -1417,6 +1325,29 @@
         return true;
     }
 
+    function validatePhone() {
+        const el = document.getElementById('phone');
+        const hint = document.getElementById('phoneHint');
+        const digits = el.value.replace(/\D/g, '');
+        if (digits.length === 13 && digits.startsWith('55')) {
+            el.classList.add('ok');
+            el.classList.remove('err');
+            hint.textContent = 'Telefone válido';
+            hint.className = 'hint ok';
+            return true;
+        } else if (digits.length > 0) {
+            el.classList.add('err');
+            el.classList.remove('ok');
+            hint.textContent = 'Formato incorreto — Digite: 55 + DDD + número. Ex: 5511987654321';
+            hint.className = 'hint err';
+            return false;
+        }
+        el.classList.remove('err', 'ok');
+        hint.textContent = 'Código do país (55) + DDD + número. Ex: 5511987654321';
+        hint.className = 'hint show';
+        return false;
+    }
+
     function resetUI() {
         document.querySelectorAll('.svc-chip').forEach(b => b.classList.remove('on'));
         document.querySelector('[data-service="Pelicula"]').classList.add('on');
@@ -1426,11 +1357,14 @@
         document.querySelectorAll('.hint').forEach(h => { h.className = 'hint'; });
         document.querySelectorAll('.inp').forEach(i => i.classList.remove('err', 'ok'));
         hideMsg('processingMsg');
-        hideMsg('formMessage');
         trimPhoneFields(1);
-        document.getElementById('btnAddPhone').classList.remove('hidden');
+        document.getElementById('hintAddPhone').classList.add('show');
+        document.getElementById('btnAddPhone').classList.add('show');
         updateAddPhoneButton();
         document.getElementById('clearConfirmation').classList.remove('show');
+        const ph = document.getElementById('phoneHint');
+        ph.textContent = 'Código do país (55) + DDD + número. Ex: 5511987654321';
+        ph.className = 'hint show';
         ['firstNameHint', 'lastNameHint'].forEach(id => {
             const h = document.getElementById(id);
             h.textContent = 'Primeira letra maiúscula';
@@ -1507,18 +1441,32 @@
         }
 
         hideMsg('processingMsg');
-        
-        let msgText = '';
-        if (successCount === 1) {
-            msgText = eventType === 'Lead' ? '1 Lead registrado com sucesso!' : '1 Venda registrada com sucesso!';
-        } else {
-            msgText = eventType === 'Lead' ? `${successCount} Leads registrados com sucesso!` : `${successCount} Vendas registradas com sucesso!`;
+
+        for (const phone of phones) {
+            localRecords.unshift({
+                phone,
+                event_name: eventType,
+                event_time: eventDateTime.toISOString(),
+                service: selectedService
+            });
         }
-        
+        renderTable();
+
+        let msgText = '';
+        if (phones.length === 1) {
+            const displayPhone = phones[0].replace(/(\d{2})(\d{4,5})(\d{4})/, '($1) $2-$3');
+            msgText = eventType === 'Lead'
+                ? `Lead registrado: ${displayPhone} — ${selectedService}`
+                : `Venda registrada: ${baseData.email} — ${selectedService}`;
+        } else {
+            msgText = eventType === 'Lead'
+                ? `${successCount} Leads enviados com sucesso — ${selectedService}`
+                : `${successCount} Vendas registradas com sucesso — ${selectedService}`;
+        }
+
         showMsg('formMessage', msgText, 'success');
         document.getElementById('dataForm').reset();
-        setTimeout(() => loadRecords(), 1200);
-        setTimeout(() => hideMsg('formMessage'), 4000);
+        setTimeout(() => hideMsg('formMessage'), 8000);
 
         isSubmitting = false;
         btn.disabled = false;
@@ -1527,11 +1475,12 @@
 
     /* RECORDS */
     async function loadRecords() {
+        if (clearedOnce) return;
         try {
             const res = await fetch(APPS_SCRIPT_URL + '?action=getRecords');
             if (res.ok) {
                 const json = await res.json();
-                allRecords = json.records || [];
+                localRecords = json.records || [];
                 renderTable();
             }
         } catch (e) {
@@ -1544,20 +1493,20 @@
         const count = document.getElementById('recordsCount');
         const btnClear = document.getElementById('btnClearRec');
 
-        if (!allRecords.length) {
+        if (!localRecords.length) {
             body.innerHTML = '<div class="empty">Nenhum registro ainda</div>';
             count.textContent = '';
             btnClear.classList.add('hidden');
             return;
         }
 
-        count.textContent = allRecords.length + ' registros';
+        count.textContent = localRecords.length + ' registros';
         btnClear.classList.remove('hidden');
 
         const list = document.createElement('div');
         list.className = 'rec-list';
 
-        [...allRecords].reverse().forEach((rec, i) => {
+        [...localRecords].reverse().forEach((rec, i) => {
             const row = document.createElement('div');
             row.className = 'rec-row' + (i < 3 ? ' fresh' : '');
 
