@@ -6,506 +6,813 @@
     <title>Prime Sound — Registro de Leads</title>
     <style>
         *, *::before, *::after {
-            margin: 0;
-            padding: 0;
+            margin: 0; padding: 0;
             box-sizing: border-box;
             -webkit-tap-highlight-color: transparent;
         }
 
         :root {
-            --bg:            #090910;
-            --bg-elevated:   #0f0f18;
-            --surface:       rgba(255,255,255,0.042);
-            --surface-hover: rgba(255,255,255,0.072);
-            --border:        rgba(255,255,255,0.07);
-            --border-strong: rgba(255,255,255,0.13);
-            --accent:        #DC2626;
-            --accent-hover:  #c01e1e;
-            --accent-glow:   rgba(220,38,38,0.22);
-            --success:       #22c55e;
-            --success-bg:    rgba(34,197,94,0.10);
-            --success-bdr:   rgba(34,197,94,0.18);
-            --error:         #ef4444;
-            --error-bg:      rgba(239,68,68,0.10);
-            --error-bdr:     rgba(239,68,68,0.18);
-            --text:          #f1f5f9;
-            --text-2:        rgba(241,245,249,0.48);
-            --text-3:        rgba(241,245,249,0.26);
-            --r-sm:          10px;
-            --r-md:          14px;
-            --r-lg:          20px;
-            --r-pill:        100px;
+            --bg:       #0a0a0a;
+            --surface:  #141414;
+            --surface2: #1d1d1d;
+            --border:   rgba(255,255,255,0.06);
+            --border2:  rgba(255,255,255,0.1);
+            --accent:   #DC2626;
+            --accent-h: #b91c1c;
+            --accent-g: rgba(220,38,38,0.15);
+            --ok:       #10b981;
+            --ok-bg:    rgba(16,185,129,0.08);
+            --ok-bd:    rgba(16,185,129,0.2);
+            --err:      #ef4444;
+            --err-bg:   rgba(239,68,68,0.08);
+            --err-bd:   rgba(239,68,68,0.2);
+            --t1:  #f8fafc;
+            --t2:  rgba(248,250,252,0.6);
+            --t3:  rgba(248,250,252,0.35);
+            --r:   14px;
+            --r-lg: 20px;
+            --r-pill: 999px;
         }
 
-        html { background: var(--bg); }
+        html, body {
+            background: var(--bg);
+            background-image: radial-gradient(ellipse 800px 600px at 50% -200px, rgba(220,38,38,0.08) 0%, transparent 70%);
+            background-attachment: fixed;
+        }
 
         body {
-            font-family: -apple-system, 'SF Pro Display', 'SF Pro Text',
-                         BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            min-height: 100vh;
+            font-family: -apple-system, 'SF Pro Display', 'SF Pro Text', BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
+            color: var(--t1);
             min-height: 100dvh;
             display: flex;
             align-items: flex-start;
             justify-content: center;
-            padding: 28px 20px 48px;
-            position: relative;
-            overflow-x: hidden;
+            padding: 0 0 60px;
             -webkit-font-smoothing: antialiased;
-        }
-
-        body::before {
-            content: '';
-            position: fixed;
-            inset: 0;
-            background:
-                radial-gradient(ellipse 90% 50% at 50% -5%,
-                    rgba(220,38,38,0.07) 0%, transparent 65%),
-                radial-gradient(ellipse 60% 40% at 85% 95%,
-                    rgba(220,38,38,0.04) 0%, transparent 55%);
-            pointer-events: none;
-            z-index: 0;
+            -moz-osx-font-smoothing: grayscale;
         }
 
         .container {
             width: 100%;
-            max-width: 430px;
+            max-width: 420px;
             position: relative;
             z-index: 1;
+            padding: 0 16px;
         }
 
-        /* ───────────────────────────────
-           LOGIN
-        ─────────────────────────────── */
-        .login-screen {
-            animation: fadeUp .55s cubic-bezier(.16,1,.3,1) both;
-            padding-top: 10vh;
+        /* ════ LOGIN ════ */
+        #loginScreen {
+            animation: fadeUp .6s cubic-bezier(.16,1,.3,1) both;
+            padding-top: 14vh;
         }
 
-        .login-card {
-            background: rgba(255,255,255,0.036);
-            border: 1px solid var(--border);
-            border-radius: var(--r-lg);
-            padding: 52px 40px 44px;
-            backdrop-filter: blur(48px);
-            -webkit-backdrop-filter: blur(48px);
+        @media (max-height: 700px) { #loginScreen { padding-top: 8vh; } }
+
+        .login-logo-area {
+            text-align: center;
+            margin-bottom: 52px;
         }
 
-        @media (max-width: 480px) {
-            .login-card { padding: 44px 28px 36px; }
-            .login-screen { padding-top: 6vh; }
+        .login-logo-area img {
+            height: 90px;
+            width: auto;
+            object-fit: contain;
+            margin-bottom: 12px;
         }
 
-        /* ───────────────────────────────
-           LOGO
-        ─────────────────────────────── */
-        .logo-wrap {
+        .login-logo-area .logo-text-fallback {
+            font-size: 32px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: var(--t1);
+            text-transform: uppercase;
+            display: none;
+            margin-bottom: 12px;
+        }
+
+        .login-tagline {
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--t3);
+        }
+
+        /* ════ APP HEADER ════ */
+        #appScreen {
+            animation: fadeUp .5s cubic-bezier(.16,1,.3,1) both;
+            padding-top: 48px;
+        }
+
+        .app-header {
             display: flex;
-            justify-content: center;
-            margin-bottom: 6px;
-        }
-
-        .logo-box {
-            background: #ffffff;
-            border-radius: 14px;
-            padding: 11px 22px;
-            display: inline-flex;
             align-items: center;
-            justify-content: center;
+            justify-content: space-between;
+            margin-bottom: 36px;
+            gap: 12px;
         }
 
-        .logo-img {
-            height: 40px;
+        .app-logo-section {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex: 1;
+            min-width: 0;
+        }
+
+        .app-logo img {
+            height: 48px;
             width: auto;
             object-fit: contain;
             display: block;
+            flex-shrink: 0;
         }
 
-        .logo-img-sm {
-            height: 28px;
-        }
-
-        .logo-fallback {
+        .app-logo .logo-text-fallback {
             font-size: 18px;
             font-weight: 700;
-            letter-spacing: 3.5px;
-            color: #111;
+            letter-spacing: 2px;
+            color: var(--t1);
             text-transform: uppercase;
             display: none;
+            flex-shrink: 0;
         }
 
-        .tagline {
-            text-align: center;
-            font-size: 10.5px;
+        .app-label {
+            font-size: 10px;
             font-weight: 600;
-            letter-spacing: 2.2px;
+            letter-spacing: 1.5px;
             text-transform: uppercase;
-            color: var(--text-3);
-            margin-bottom: 44px;
+            color: var(--t3);
         }
 
-        /* ───────────────────────────────
-           FIELDS
-        ─────────────────────────────── */
-        .field { margin-bottom: 18px; }
+        .app-header-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-shrink: 0;
+        }
 
-        .field-label {
+        .btn-header {
+            padding: 8px 14px;
+            border: 1px solid var(--border2);
+            border-radius: var(--r-pill);
+            background: transparent;
+            color: var(--t2);
+            font-size: 12px;
+            font-weight: 500;
+            font-family: inherit;
+            cursor: pointer;
+            letter-spacing: .3px;
+            transition: all .15s;
+            white-space: nowrap;
+        }
+
+        .btn-header:hover {
+            color: var(--t1);
+            border-color: rgba(255,255,255,.18);
+            background: rgba(255,255,255,.03);
+        }
+
+        /* ════ CARD ════ */
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--r-lg);
+            padding: 28px 22px 24px;
+            margin-bottom: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        /* ════ SERVICE CHIPS ════ */
+        .service-row {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .svc-chip {
+            flex: 1;
+            padding: 15px 14px;
+            border-radius: var(--r-pill);
+            border: 1px solid var(--border2);
+            background: rgba(255,255,255,.02);
+            color: var(--t2);
+            font-size: 14px;
+            font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
+            text-align: center;
+            letter-spacing: .2px;
+            transition: all .2s cubic-bezier(.16,1,.3,1);
+            user-select: none;
+        }
+
+        .svc-chip:hover {
+            background: rgba(255,255,255,.06);
+            color: var(--t1);
+            border-color: var(--border2);
+        }
+
+        .svc-chip.on {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: #fff;
+            box-shadow: 0 8px 24px var(--accent-g);
+        }
+
+        /* ════ TOGGLE ════ */
+        .toggle-block {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 18px;
+            background: rgba(255,255,255,.02);
+            border: 1px solid var(--border);
+            border-radius: var(--r);
+            cursor: pointer;
+            user-select: none;
+            margin-bottom: 20px;
+            transition: all .15s;
+        }
+
+        .toggle-block:hover {
+            background: rgba(255,255,255,.04);
+            border-color: var(--border2);
+        }
+
+        .toggle-left {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .toggle-title {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--t1);
+        }
+
+        .toggle-sub {
+            font-size: 11px;
+            color: var(--t2);
+        }
+
+        .sw {
+            width: 48px;
+            height: 28px;
+            background: rgba(255,255,255,.1);
+            border-radius: 14px;
+            position: relative;
+            flex-shrink: 0;
+            transition: background .2s;
+        }
+
+        .sw.on {
+            background: var(--accent);
+        }
+
+        .sw::after {
+            content: '';
+            position: absolute;
+            width: 24px;
+            height: 24px;
+            background: #fff;
+            border-radius: 50%;
+            top: 2px;
+            left: 2px;
+            transition: transform .2s cubic-bezier(.16,1,.3,1);
+            box-shadow: 0 2px 8px rgba(0,0,0,.3);
+        }
+
+        .sw.on::after {
+            transform: translateX(20px);
+        }
+
+        /* ════ FIELDS ════ */
+        .sep {
+            height: 1px;
+            background: var(--border);
+            margin: 22px 0 20px;
+        }
+
+        .field {
+            margin-bottom: 18px;
+            position: relative;
+        }
+
+        .lbl {
             display: flex;
             align-items: baseline;
-            gap: 5px;
-            font-size: 11.5px;
+            gap: 6px;
+            font-size: 11px;
             font-weight: 600;
-            letter-spacing: .8px;
+            letter-spacing: 1px;
             text-transform: uppercase;
-            color: var(--text-2);
-            margin-bottom: 7px;
+            color: var(--t2);
+            margin-bottom: 8px;
         }
 
-        .optional {
+        .opt {
             font-weight: 400;
-            letter-spacing: 0;
             text-transform: none;
-            font-size: 10.5px;
-            color: var(--text-3);
+            letter-spacing: 0;
+            font-size: 10px;
+            color: var(--t3);
         }
 
-        .input {
+        .inp {
             width: 100%;
-            padding: 13px 15px;
-            background: rgba(255,255,255,0.038);
+            padding: 14px 15px;
+            background: rgba(255,255,255,.02);
             border: 1px solid var(--border);
-            border-radius: var(--r-sm);
-            color: var(--text);
+            border-radius: var(--r);
+            color: var(--t1);
             font-size: 15px;
             font-family: inherit;
-            transition: border-color .18s, box-shadow .18s, background .18s;
+            transition: all .15s;
             appearance: none;
             -webkit-appearance: none;
         }
 
-        .input:focus {
+        .inp:focus {
             outline: none;
-            border-color: rgba(220,38,38,.38);
-            background: rgba(255,255,255,0.056);
-            box-shadow: 0 0 0 3px rgba(220,38,38,.07);
+            border-color: rgba(220,38,38,.5);
+            background: rgba(255,255,255,.03);
+            box-shadow: 0 0 0 4px rgba(220,38,38,.08);
         }
 
-        .input::placeholder { color: var(--text-3); }
-
-        .input.err {
-            border-color: rgba(239,68,68,.45);
-            box-shadow: 0 0 0 3px rgba(239,68,68,.07);
-        }
-        .input.ok {
-            border-color: rgba(34,197,94,.35);
+        .inp::placeholder {
+            color: var(--t3);
         }
 
-        select.input {
+        .inp.err {
+            border-color: rgba(239,68,68,.4);
+            box-shadow: 0 0 0 3px rgba(239,68,68,.06);
+        }
+
+        .inp.ok {
+            border-color: rgba(16,185,129,.3);
+        }
+
+        select.inp {
             cursor: pointer;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='7' viewBox='0 0 12 7'%3E%3Cpath d='M1 1l5 5 5-5' stroke='rgba(241,245,249,.28)' stroke-width='1.6' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5.5L11 1' stroke='rgba(248,250,252,.4)' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
             background-repeat: no-repeat;
             background-position: right 14px center;
             padding-right: 38px;
         }
 
         .hint {
-            font-size: 11.5px;
-            color: var(--text-3);
-            margin-top: 5px;
-            line-height: 1.45;
+            font-size: 11px;
+            color: var(--t3);
+            margin-top: 6px;
+            line-height: 1.5;
             display: none;
         }
-        .hint.show  { display: block; }
-        .hint.err   { color: var(--error); display: block; }
-        .hint.ok    { color: var(--success); display: block; }
 
-        /* ───────────────────────────────
-           SERVICE PILLS
-        ─────────────────────────────── */
-        .service-selector {
-            display: flex;
-            gap: 9px;
-            margin-bottom: 20px;
+        .hint.show {
+            display: block;
         }
 
-        .service-btn {
+        .hint.err {
+            color: var(--err);
+            display: block;
+        }
+
+        .hint.ok {
+            color: var(--ok);
+            display: block;
+        }
+
+        .row-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+        }
+
+        @media (max-width: 360px) {
+            .row-2 {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* ════ PASSWORD TOGGLE ════ */
+        .password-wrapper {
+            position: relative;
+        }
+
+        .toggle-pwd-btn {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--t3);
+            cursor: pointer;
+            padding: 6px;
+            transition: color .15s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .toggle-pwd-btn:hover {
+            color: var(--t1);
+        }
+
+        .pwd-input {
+            padding-right: 42px;
+        }
+
+        /* ════ MULTIPLE PHONES ════ */
+        .phone-fields-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .phone-field-wrapper {
+            display: flex;
+            gap: 8px;
+            align-items: flex-end;
+        }
+
+        .phone-field-wrapper .field {
             flex: 1;
-            padding: 12px 10px;
-            border-radius: var(--r-pill);
-            border: 1px solid var(--border);
-            background: var(--surface);
-            color: var(--text-2);
-            font-size: 13.5px;
-            font-weight: 600;
-            font-family: inherit;
+            margin-bottom: 0;
+        }
+
+        .btn-remove-phone {
+            background: none;
+            border: 1px solid var(--border2);
+            color: var(--t3);
+            width: 40px;
+            height: 40px;
+            border-radius: var(--r);
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 6px;
-            letter-spacing: .15px;
-            transition: all .2s cubic-bezier(.16,1,.3,1);
-            user-select: none;
-        }
-
-        .service-btn:hover {
-            background: var(--surface-hover);
-            border-color: var(--border-strong);
-            color: var(--text);
-        }
-
-        .service-btn.active {
-            background: var(--accent);
-            border-color: var(--accent);
-            color: #fff;
-            box-shadow: 0 4px 18px var(--accent-glow);
-        }
-
-        .svc-icon { font-size: 15px; line-height: 1; }
-
-        /* ───────────────────────────────
-           TOGGLE ROW
-        ─────────────────────────────── */
-        .toggle-row {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 13px 15px;
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: var(--r-sm);
-            cursor: pointer;
-            transition: background .18s;
-            margin-bottom: 18px;
-            user-select: none;
-        }
-
-        .toggle-row:hover { background: var(--surface-hover); }
-
-        .toggle-row-left { display: flex; flex-direction: column; gap: 2px; }
-        .toggle-title { font-size: 13.5px; font-weight: 500; color: var(--text); }
-        .toggle-sub   { font-size: 11.5px; color: var(--text-2); }
-
-        .toggle-sw {
-            position: relative;
-            width: 42px;
-            height: 25px;
-            background: rgba(255,255,255,.11);
-            border-radius: 13px;
-            transition: background .22s;
+            font-size: 18px;
+            transition: all .15s;
             flex-shrink: 0;
         }
 
-        .toggle-sw.on { background: var(--accent); }
+        .btn-remove-phone:hover {
+            color: var(--err);
+            border-color: rgba(239,68,68,.2);
+            background: rgba(239,68,68,.06);
+        }
 
-        .toggle-sw::after {
-            content: '';
+        .btn-add-phone {
+            font-size: 13px;
+            color: var(--accent);
+            background: transparent;
+            border: 1px solid var(--accent);
+            border-radius: var(--r);
+            padding: 10px 14px;
+            cursor: pointer;
+            transition: all .15s;
+            font-weight: 500;
+            width: 100%;
+            margin-top: 8px;
+        }
+
+        .btn-add-phone:hover {
+            background: var(--accent-g);
+            border-color: var(--accent);
+        }
+
+        .btn-add-phone.disabled {
+            opacity: .5;
+            cursor: not-allowed;
+        }
+
+        .max-phones-hint {
+            font-size: 11px;
+            color: var(--t3);
+            margin-top: 8px;
+            text-align: center;
+        }
+
+        /* ════ CLEAR CONFIRMATION ════ */
+        .clear-confirmation {
+            display: none;
+            gap: 8px;
+            margin-top: 12px;
+            animation: slideUp .2s cubic-bezier(.16,1,.3,1) both;
+        }
+
+        .clear-confirmation.show {
+            display: flex;
+        }
+
+        .btn-confirm-clear {
+            flex: 1;
+            background: var(--err);
+            color: #fff;
+            border: none;
+            border-radius: var(--r);
+            padding: 10px 14px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all .15s;
+            font-family: inherit;
+        }
+
+        .btn-confirm-clear:hover {
+            background: #dc2626;
+            box-shadow: 0 4px 16px rgba(239,68,68,.25);
+        }
+
+        .btn-cancel-clear {
+            flex: 1;
+            background: transparent;
+            color: var(--t2);
+            border: 1px solid var(--border2);
+            border-radius: var(--r);
+            padding: 10px 14px;
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all .15s;
+            font-family: inherit;
+        }
+
+        .btn-cancel-clear:hover {
+            color: var(--t1);
+            border-color: var(--border2);
+            background: rgba(255,255,255,.03);
+        }
+
+        /* ════ INSTRUCTIONS PANEL ════ */
+        .instructions-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,.6);
+            backdrop-filter: blur(4px);
+            z-index: 100;
+            animation: fadeIn .3s cubic-bezier(.16,1,.3,1) both;
+        }
+
+        .instructions-overlay.show {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .instructions-panel {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--r-lg);
+            padding: 32px 28px;
+            max-width: 480px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            animation: slideUp .4s cubic-bezier(.16,1,.3,1) both;
+            position: relative;
+        }
+
+        .instructions-close {
             position: absolute;
-            width: 21px;
-            height: 21px;
-            background: #fff;
-            border-radius: 50%;
-            top: 2px;
-            left: 2px;
-            transition: transform .22s cubic-bezier(.16,1,.3,1);
-            box-shadow: 0 1px 4px rgba(0,0,0,.35);
+            top: 16px;
+            right: 16px;
+            background: none;
+            border: none;
+            color: var(--t3);
+            font-size: 24px;
+            cursor: pointer;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: color .15s;
         }
 
-        .toggle-sw.on::after { transform: translateX(17px); }
-
-        /* ───────────────────────────────
-           FORM LAYOUT
-        ─────────────────────────────── */
-        .row-2 {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 11px;
-        }
-        @media (max-width: 360px) { .row-2 { grid-template-columns: 1fr; } }
-
-        .section-sep {
-            height: 1px;
-            background: var(--border);
-            margin: 22px 0 20px;
+        .instructions-close:hover {
+            color: var(--t1);
         }
 
-        /* ───────────────────────────────
-           MESSAGES
-        ─────────────────────────────── */
+        .instructions-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--t1);
+        }
+
+        .instructions-section {
+            margin-bottom: 24px;
+        }
+
+        .instructions-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .instructions-section-title {
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--t2);
+            margin-bottom: 10px;
+        }
+
+        .instructions-text {
+            font-size: 13px;
+            color: var(--t2);
+            line-height: 1.6;
+            margin-bottom: 8px;
+        }
+
+        .instructions-text strong {
+            color: var(--t1);
+            font-weight: 600;
+        }
+
+        .instructions-list {
+            font-size: 13px;
+            color: var(--t2);
+            line-height: 1.7;
+            margin-left: 16px;
+        }
+
+        .instructions-list li {
+            margin-bottom: 6px;
+        }
+
+        /* ════ MESSAGES ════ */
         .msg {
             display: none;
             align-items: center;
-            gap: 9px;
-            padding: 13px 15px;
-            border-radius: var(--r-sm);
-            font-size: 13.5px;
+            gap: 11px;
+            padding: 14px 16px;
+            border-radius: var(--r);
+            font-size: 13px;
             font-weight: 500;
             line-height: 1.4;
-            margin-bottom: 14px;
-            animation: slideUp .28s cubic-bezier(.16,1,.3,1) both;
+            margin-bottom: 16px;
+            animation: slideUp .25s cubic-bezier(.16,1,.3,1) both;
         }
 
-        .msg.show { display: flex; }
+        .msg.show {
+            display: flex;
+        }
 
         .msg.success {
-            background: var(--success-bg);
-            color: var(--success);
-            border: 1px solid var(--success-bdr);
+            background: var(--ok-bg);
+            color: var(--ok);
+            border: 1px solid var(--ok-bd);
         }
+
         .msg.error {
-            background: var(--error-bg);
-            color: var(--error);
-            border: 1px solid var(--error-bdr);
+            background: var(--err-bg);
+            color: var(--err);
+            border: 1px solid var(--err-bd);
         }
+
         .msg.loading {
-            background: rgba(255,255,255,0.04);
-            color: var(--text-2);
+            background: rgba(255,255,255,.04);
+            color: var(--t2);
             border: 1px solid var(--border);
         }
 
-        .msg-icon { font-size: 17px; flex-shrink: 0; line-height: 1; }
-
-        /* ───────────────────────────────
-           BUTTONS
-        ─────────────────────────────── */
+        /* ════ BUTTONS ════ */
         .btn {
             border: none;
-            border-radius: var(--r-sm);
+            border-radius: var(--r);
             font-size: 15px;
             font-weight: 600;
             font-family: inherit;
             cursor: pointer;
-            transition: all .2s cubic-bezier(.16,1,.3,1);
-            letter-spacing: .1px;
             display: inline-flex;
             align-items: center;
             justify-content: center;
             gap: 8px;
-            padding: 14px 22px;
+            padding: 16px 24px;
+            letter-spacing: .1px;
+            transition: all .2s cubic-bezier(.16,1,.3,1);
             white-space: nowrap;
         }
 
-        .btn-red {
+        .btn-primary {
             background: var(--accent);
             color: #fff;
-            flex: 2;
             width: 100%;
         }
-        .btn-red:hover:not(:disabled) {
-            background: var(--accent-hover);
-            box-shadow: 0 6px 20px var(--accent-glow);
-            transform: translateY(-1px);
-        }
-        .btn-red:active:not(:disabled) { transform: none; box-shadow: none; }
-        .btn-red:disabled { opacity: .55; cursor: not-allowed; }
 
-        .btn-ghost {
-            background: var(--surface);
-            color: var(--text-2);
+        .btn-primary:hover:not(:disabled) {
+            background: var(--accent-h);
+            box-shadow: 0 8px 28px var(--accent-g);
+            transform: translateY(-2px);
+        }
+
+        .btn-primary:active:not(:disabled) {
+            transform: none;
+            box-shadow: none;
+        }
+
+        .btn-primary:disabled {
+            opacity: .5;
+            cursor: not-allowed;
+        }
+
+        .btn-secondary {
+            background: rgba(255,255,255,.04);
+            color: var(--t2);
             border: 1px solid var(--border);
             flex: 1;
         }
-        .btn-ghost:hover {
-            background: var(--surface-hover);
-            color: var(--text);
-            border-color: var(--border-strong);
+
+        .btn-secondary:hover {
+            background: rgba(255,255,255,.06);
+            color: var(--t1);
+            border-color: var(--border2);
         }
 
         .btn-row {
             display: flex;
-            gap: 10px;
-            margin-top: 6px;
+            gap: 12px;
+            margin-top: 10px;
+        }
+
+        .btn-row .btn-primary {
+            flex: 2;
+            width: auto;
+        }
+
+        .login-btn-wrap {
+            margin-top: 8px;
         }
 
         /* Spinner */
         .spin {
-            width: 15px;
-            height: 15px;
-            border: 2px solid rgba(255,255,255,.25);
+            width: 16px;
+            height: 16px;
+            border: 2.5px solid rgba(255,255,255,.2);
             border-top-color: #fff;
             border-radius: 50%;
-            animation: rotate .65s linear infinite;
+            animation: rot .65s linear infinite;
             flex-shrink: 0;
         }
 
-        /* ───────────────────────────────
-           APP HEADER
-        ─────────────────────────────── */
-        .app-header {
+        /* ════ RECORDS ════ */
+        .rec-header {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 22px;
-            gap: 12px;
+            margin-bottom: 14px;
+            gap: 10px;
         }
 
-        .header-brand { min-width: 0; }
-        .header-tagline {
-            font-size: 10px;
+        .rec-title {
+            font-size: 11px;
             font-weight: 600;
-            letter-spacing: 1.8px;
+            letter-spacing: 1.5px;
             text-transform: uppercase;
-            color: var(--text-3);
-            margin-top: 5px;
+            color: var(--t3);
         }
 
-        .logout-btn {
-            padding: 7px 15px;
+        .rec-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .rec-count {
+            font-size: 11px;
+            color: var(--t3);
+        }
+
+        .btn-clear-rec {
+            font-size: 11px;
+            font-weight: 500;
+            font-family: inherit;
+            color: var(--t3);
             background: transparent;
             border: 1px solid var(--border);
             border-radius: var(--r-pill);
-            color: var(--text-3);
-            font-size: 12px;
-            font-weight: 500;
-            font-family: inherit;
+            padding: 5px 12px;
             cursor: pointer;
-            transition: all .18s;
-            flex-shrink: 0;
-        }
-        .logout-btn:hover {
-            border-color: var(--border-strong);
-            color: var(--text-2);
+            transition: all .15s;
+            letter-spacing: .2px;
         }
 
-        /* ───────────────────────────────
-           FORM CARD
-        ─────────────────────────────── */
-        .card {
-            background: rgba(255,255,255,0.036);
-            border: 1px solid var(--border);
-            border-radius: var(--r-lg);
-            padding: 26px 22px 22px;
-            backdrop-filter: blur(32px);
-            -webkit-backdrop-filter: blur(32px);
-            margin-bottom: 18px;
+        .btn-clear-rec:hover {
+            color: var(--err);
+            border-color: rgba(239,68,68,.3);
         }
 
-        /* ───────────────────────────────
-           RECORDS
-        ─────────────────────────────── */
-        .records-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 10px;
-        }
-
-        .records-title {
-            font-size: 11px;
-            font-weight: 600;
-            letter-spacing: 1.2px;
-            text-transform: uppercase;
-            color: var(--text-3);
-        }
-
-        .records-count {
-            font-size: 11px;
-            color: var(--text-3);
-        }
-
-        .records-list {
-            border-radius: var(--r-md);
+        .rec-list {
+            border-radius: var(--r);
             overflow: hidden;
             display: flex;
             flex-direction: column;
@@ -513,261 +820,310 @@
             background: var(--border);
         }
 
-        .record-row {
-            background: var(--bg-elevated);
-            padding: 12px 15px;
+        .rec-row {
+            background: var(--surface2);
+            padding: 14px 16px;
             display: flex;
             align-items: center;
             justify-content: space-between;
             gap: 10px;
-            transition: background .14s;
+            transition: all .12s;
         }
 
-        .record-row:hover { background: rgba(255,255,255,.04); }
-        .record-row.new   { background: rgba(34,197,94,.05); }
+        .rec-row:hover {
+            background: rgba(255,255,255,.05);
+        }
+
+        .rec-row.fresh {
+            background: rgba(16,185,129,.08);
+        }
 
         .rec-phone {
             font-size: 13px;
             font-weight: 500;
-            color: var(--text);
+            color: var(--t1);
             font-variant-numeric: tabular-nums;
+            flex: 1;
             min-width: 0;
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
-            flex: 1;
         }
 
         .rec-meta {
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 7px;
             flex-shrink: 0;
         }
 
-        .badge {
+        .chip {
             font-size: 10px;
             font-weight: 700;
-            padding: 3px 7px;
-            border-radius: 5px;
+            padding: 4px 9px;
+            border-radius: 6px;
             letter-spacing: .3px;
             text-transform: uppercase;
         }
 
-        .badge-lead     { background: rgba(220,38,38,.14); color: #f87171; }
-        .badge-purchase { background: rgba(34,197,94,.14); color: #4ade80; }
-        .badge-svc      { background: rgba(255,255,255,.07); color: var(--text-2); }
+        .chip-lead {
+            background: rgba(220,38,38,.14);
+            color: #f87171;
+        }
+
+        .chip-sale {
+            background: rgba(16,185,129,.14);
+            color: #4ade80;
+        }
+
+        .chip-svc {
+            background: rgba(255,255,255,.08);
+            color: var(--t2);
+        }
 
         .rec-time {
-            font-size: 10.5px;
-            color: var(--text-3);
+            font-size: 10px;
+            color: var(--t3);
             font-variant-numeric: tabular-nums;
         }
 
-        .empty-state {
-            padding: 36px 20px;
+        .empty {
+            padding: 44px 20px;
             text-align: center;
-            color: var(--text-3);
+            color: var(--t3);
             font-size: 13px;
-            background: rgba(255,255,255,.025);
-            border-radius: var(--r-md);
+            background: var(--surface);
+            border-radius: var(--r);
             border: 1px solid var(--border);
         }
 
-        /* ───────────────────────────────
-           ANIMATIONS
-        ─────────────────────────────── */
+        /* ════ FOOTER ════ */
+        .app-footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 32px;
+            border-top: 1px solid var(--border);
+        }
+
+        .footer-text {
+            font-size: 12px;
+            color: var(--t3);
+            line-height: 1.5;
+        }
+
+        .footer-text a {
+            color: var(--accent);
+            text-decoration: none;
+            transition: color .15s;
+        }
+
+        .footer-text a:hover {
+            color: var(--accent-h);
+        }
+
+        /* ════ ANIMATIONS ════ */
         @keyframes fadeUp {
-            from { opacity:0; transform: translateY(18px); }
-            to   { opacity:1; transform: translateY(0); }
+            from { opacity: 0; transform: translateY(16px); }
+            to { opacity: 1; transform: translateY(0); }
         }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
         @keyframes slideUp {
-            from { opacity:0; transform: translateY(6px); }
-            to   { opacity:1; transform: translateY(0); }
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-        @keyframes rotate {
+
+        @keyframes rot {
             to { transform: rotate(360deg); }
         }
 
-        .app-screen { animation: fadeUp .45s cubic-bezier(.16,1,.3,1) both; }
-
-        .hidden { display: none !important; }
+        .hidden {
+            display: none !important;
+        }
     </style>
 </head>
 <body>
 <div class="container">
 
-    <!-- ═══════════════════════════════════
-         LOGIN
-    ═══════════════════════════════════ -->
-    <div id="loginScreen" class="login-screen">
-        <div class="login-card">
+    <!-- LOGIN -->
+    <div id="loginScreen">
+        <div class="login-logo-area">
+            <img src="logo invertido sem fundo.png" alt="Prime Sound" 
+                 onerror="this.style.display='none';this.nextElementSibling.style.display='block';">
+            <div class="logo-text-fallback">PRIME SOUND</div>
+            <div class="login-tagline">Registro de Leads</div>
+        </div>
 
-            <div class="logo-wrap">
-                <div class="logo-box">
-                    <img
-                        src="logo.png"
-                        alt="Prime Sound"
-                        class="logo-img"
-                        onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"
-                    >
-                    <span class="logo-fallback">PRIME SOUND</span>
+        <form id="loginForm">
+            <div class="field">
+                <label class="lbl" for="authCode">Código de Acesso</label>
+                <div class="password-wrapper">
+                    <input type="password" id="authCode" class="inp pwd-input" 
+                           placeholder="••••••••" required autocomplete="current-password">
+                    <button type="button" id="togglePwd" class="toggle-pwd-btn" onclick="togglePasswordVisibility()">
+                        <svg id="eyeIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                            <circle cx="12" cy="12" r="3"></circle>
+                        </svg>
+                    </button>
                 </div>
             </div>
-            <div class="tagline">Registro de Leads</div>
 
-            <form id="loginForm">
-                <div class="field">
-                    <label class="field-label" for="authCode">Código de Acesso</label>
-                    <input
-                        type="password"
-                        id="authCode"
-                        class="input"
-                        placeholder="••••••••"
-                        required
-                        autocomplete="current-password"
-                    >
-                </div>
+            <div id="loginMessage" class="msg" style="margin-bottom:16px;"></div>
 
-                <div id="loginMessage" class="msg" style="margin-bottom:18px"></div>
-
-                <button type="submit" class="btn btn-red" style="width:100%">
-                    Entrar
-                </button>
-            </form>
-
-        </div>
+            <div class="login-btn-wrap">
+                <button type="submit" class="btn btn-primary">Entrar</button>
+            </div>
+        </form>
     </div>
 
-    <!-- ═══════════════════════════════════
-         APP
-    ═══════════════════════════════════ -->
-    <div id="appScreen" class="app-screen hidden">
+    <!-- APP -->
+    <div id="appScreen" class="hidden">
 
         <!-- Header -->
         <div class="app-header">
-            <div class="header-brand">
-                <div class="logo-box" style="padding:7px 16px; border-radius:11px;">
-                    <img
-                        src="logo.png"
-                        alt="Prime Sound"
-                        class="logo-img logo-img-sm"
-                        onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"
-                    >
-                    <span class="logo-fallback" style="font-size:13px; letter-spacing:2px;">PRIME SOUND</span>
+            <div class="app-logo-section">
+                <div class="app-logo">
+                    <img src="logo invertido sem fundo.png" alt="Prime Sound"
+                         onerror="this.style.display='none';this.nextElementSibling.style.display='block';">
+                    <div class="logo-text-fallback">PRIME SOUND</div>
                 </div>
-                <div class="header-tagline">Registro de Leads</div>
+                <div class="app-label">Registro de Leads</div>
             </div>
-            <button class="logout-btn" onclick="logout()">Sair</button>
+            <div class="app-header-actions">
+                <button type="button" class="btn-header" onclick="toggleInstructions()">Como usar</button>
+                <button type="button" class="btn-header" onclick="logout()">Sair</button>
+            </div>
         </div>
 
-        <!-- Form Card -->
+        <!-- Instructions Panel -->
+        <div id="instructionsOverlay" class="instructions-overlay" onclick="event.target === this && toggleInstructions()">
+            <div class="instructions-panel">
+                <button class="instructions-close" onclick="toggleInstructions()">×</button>
+                <h2 class="instructions-title">Como usar o CRM Light</h2>
+                
+                <div class="instructions-section">
+                    <div class="instructions-section-title">Passo a passo rápido</div>
+                    <ol class="instructions-list">
+                        <li>Selecione o serviço (Película ou PPF)</li>
+                        <li>Escolha o tipo de evento (Lead ou Purchase)</li>
+                        <li>Preencha o telefone do cliente</li>
+                        <li>Para Purchase, inclua o email</li>
+                        <li>Clique em "Registrar" para enviar</li>
+                    </ol>
+                </div>
+
+                <div class="instructions-section">
+                    <div class="instructions-section-title">Lead vs Purchase</div>
+                    <div class="instructions-text">
+                        <strong>Lead:</strong> Cliente demonstrou interesse e tinha potencial para fechar negócio, mas não fechou. Exemplo: pediu orçamento, perguntou sobre o serviço, visitou o local.
+                    </div>
+                    <div class="instructions-text">
+                        <strong>Purchase:</strong> Cliente fechou e pagou o serviço. É necessário incluir o email do cliente.
+                    </div>
+                </div>
+
+                <div class="instructions-section">
+                    <div class="instructions-section-title">Múltiplos contatos</div>
+                    <div class="instructions-text">
+                        Para Lead, você pode adicionar vários contatos de uma vez usando o botão "+ Adicionar contato". Máximo 10 contatos por envio.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Form -->
         <div class="card">
             <form id="dataForm">
 
-                <!-- Service Pills -->
-                <div class="service-selector">
-                    <button type="button" class="service-btn active" data-service="Pelicula">
-                        <span class="svc-icon">🚗</span> Película
-                    </button>
-                    <button type="button" class="service-btn" data-service="PPF">
-                        <span class="svc-icon">🛡️</span> PPF
-                    </button>
+                <!-- Service -->
+                <div class="service-row">
+                    <button type="button" class="svc-chip on" data-service="Pelicula">Película</button>
+                    <button type="button" class="svc-chip" data-service="PPF">PPF</button>
                 </div>
 
                 <!-- Toggle retroativo -->
-                <div class="toggle-row" id="toggleRetroactiveRow">
-                    <div class="toggle-row-left">
+                <div class="toggle-block" id="toggleRetroactiveRow">
+                    <div class="toggle-left">
                         <span class="toggle-title">Data de conversão</span>
                         <span class="toggle-sub" id="toggleLabel">Agora (hora atual)</span>
                     </div>
-                    <div class="toggle-sw" id="toggleRetroactive"></div>
+                    <div class="sw" id="toggleRetroactive"></div>
                 </div>
 
-                <!-- Data/hora retroativa -->
-                <div id="dateTimeFields" class="hidden">
-                    <div class="row-2" style="margin-bottom:18px">
-                        <div>
-                            <label class="field-label" for="eventDate">Data</label>
-                            <input type="date" id="eventDate" class="input">
+                <!-- Date/Time Fields -->
+                <div id="dateTimeFields" class="hidden" style="margin-bottom:18px;">
+                    <div class="row-2">
+                        <div class="field" style="margin-bottom:0">
+                            <label class="lbl" for="eventDate">Data</label>
+                            <input type="date" id="eventDate" class="inp">
+                            <div class="hint show">Formato: DD/MM/AAAA</div>
                         </div>
-                        <div>
-                            <label class="field-label" for="eventTime">Hora</label>
-                            <input type="time" id="eventTime" class="input">
+                        <div class="field" style="margin-bottom:0">
+                            <label class="lbl" for="eventTime">Hora</label>
+                            <input type="time" id="eventTime" class="inp">
+                            <div class="hint show">Formato 24h</div>
                         </div>
                     </div>
                 </div>
 
-                <div class="section-sep"></div>
+                <div class="sep"></div>
 
-                <!-- Telefone -->
-                <div class="field">
-                    <label class="field-label" for="phone">Telefone</label>
-                    <input
-                        type="tel"
-                        id="phone"
-                        class="input"
-                        placeholder="+55 11 99999-9999"
-                        required
-                    >
-                    <div class="hint show" id="phoneHint">Ex: +55 11 99999-9999 ou (11) 99999-9999</div>
+                <!-- Phones -->
+                <div>
+                    <label class="lbl">Telefone</label>
+                    <div class="phone-fields-container" id="phoneFieldsContainer">
+                        <div class="field" style="margin-bottom:0">
+                            <input type="tel" class="inp phone-input" placeholder="+55 11 99999-9999" required>
+                            <div class="hint show">Ex: +55 11 99999-9999 ou (11) 99999-9999</div>
+                        </div>
+                    </div>
+                    <button type="button" class="btn-add-phone" id="btnAddPhone" onclick="addPhoneField()">+ Adicionar contato</button>
+                    <div class="max-phones-hint hidden" id="maxPhonesHint">Limite de 10 contatos atingido</div>
                 </div>
 
-                <!-- Tipo de evento -->
-                <div class="field">
-                    <label class="field-label" for="eventType">Tipo de Evento</label>
-                    <select id="eventType" class="input" required>
+                <!-- Event Type -->
+                <div class="field" style="margin-top:20px;">
+                    <label class="lbl" for="eventType">Tipo de Evento</label>
+                    <select id="eventType" class="inp" required>
                         <option value="">Selecione um tipo</option>
                         <option value="Lead">Lead — Interesse</option>
                         <option value="Purchase">Purchase — Venda</option>
                     </select>
                 </div>
 
-                <!-- Email (só Purchase) -->
+                <!-- Email (Purchase only) -->
                 <div class="field hidden" id="emailField">
-                    <label class="field-label" for="email">Email</label>
-                    <input
-                        type="email"
-                        id="email"
-                        class="input"
-                        placeholder="cliente@email.com"
-                    >
+                    <label class="lbl" for="email">Email</label>
+                    <input type="email" id="email" class="inp" placeholder="cliente@email.com">
                     <div class="hint show">Obrigatório para conversão de venda</div>
                 </div>
 
-                <div class="section-sep"></div>
+                <div class="sep"></div>
 
-                <!-- Nome e Sobrenome -->
+                <!-- Names -->
                 <div class="row-2">
                     <div class="field">
-                        <label class="field-label" for="firstName">
-                            Nome <span class="optional">(opcional)</span>
+                        <label class="lbl" for="firstName">
+                            Nome <span class="opt">(opcional)</span>
                         </label>
-                        <input
-                            type="text"
-                            id="firstName"
-                            class="input"
-                            placeholder="Ex: João"
-                            autocomplete="off"
-                        >
+                        <input type="text" id="firstName" class="inp" placeholder="Ex: João" autocomplete="off">
                         <div class="hint" id="firstNameHint">Primeira letra maiúscula</div>
                     </div>
                     <div class="field">
-                        <label class="field-label" for="lastName">
-                            Sobrenome <span class="optional">(opcional)</span>
+                        <label class="lbl" for="lastName">
+                            Sobrenome <span class="opt">(opcional)</span>
                         </label>
-                        <input
-                            type="text"
-                            id="lastName"
-                            class="input"
-                            placeholder="Ex: Silva"
-                            autocomplete="off"
-                        >
+                        <input type="text" id="lastName" class="inp" placeholder="Ex: Silva" autocomplete="off">
                         <div class="hint" id="lastNameHint">Primeira letra maiúscula</div>
                     </div>
                 </div>
 
-                <!-- Mensagens de feedback -->
+                <!-- Messages -->
                 <div id="processingMsg" class="msg loading">
                     <div class="spin"></div>
                     <span>Processando… não clique novamente</span>
@@ -775,45 +1131,55 @@
 
                 <div id="formMessage" class="msg"></div>
 
-                <!-- Botões -->
+                <!-- Buttons -->
                 <div class="btn-row">
-                    <button type="submit" class="btn btn-red" id="submitBtn">
-                        Registrar Lead
-                    </button>
-                    <button type="reset" class="btn btn-ghost">Limpar</button>
+                    <button type="submit" class="btn btn-primary" id="submitBtn">Registrar Lead</button>
+                    <button type="reset" class="btn btn-secondary">Limpar</button>
                 </div>
 
             </form>
         </div>
 
-        <!-- Registros -->
+        <!-- Records -->
         <div>
-            <div class="records-header">
-                <span class="records-title">Registros Recentes</span>
-                <span class="records-count" id="recordsCount"></span>
+            <div class="rec-header">
+                <span class="rec-title">Registros Recentes</span>
+                <div class="rec-actions">
+                    <span class="rec-count" id="recordsCount"></span>
+                    <button class="btn-clear-rec hidden" id="btnClearRec" onclick="toggleClearConfirmation()">Limpar lista</button>
+                    <div class="clear-confirmation" id="clearConfirmation">
+                        <button class="btn-confirm-clear" onclick="confirmClear()">Confirmar</button>
+                        <button class="btn-cancel-clear" onclick="cancelClear()">Cancelar</button>
+                    </div>
+                </div>
             </div>
             <div id="tableBody"></div>
         </div>
 
-    </div><!-- /appScreen -->
+        <!-- Footer -->
+        <div class="app-footer">
+            <div class="footer-text">
+                App desenvolvido por <a href="https://marketingcomdiego.com/" target="_blank" rel="noopener">Diego Costa</a>
+            </div>
+        </div>
 
-</div><!-- /container -->
+    </div>
+
+</div>
 
 <script>
-    const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxgM6pNt4gPszlr8E2O_6fDDMDOYTgwPZIgIXDbfYvmXfW13u2t9Z72mjkLpWnVAtnjqQ/exec';
+    const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxgM6pNt4gPszlr8E2O_6fDDMDOYTgwPIXDbfYvmXfW13u2t9Z72mjkLpWnVAtnjqQ/exec';
     const AUTH_CODE = 'vendas2026';
+    const MAX_PHONES = 10;
 
     let selectedService = 'Pelicula';
-    let isRetroactive   = false;
-    let allRecords      = [];
-    let isSubmitting    = false;
+    let isRetroactive = false;
+    let allRecords = [];
+    let isSubmitting = false;
 
-    /* ─── Init ─── */
-    document.addEventListener('DOMContentLoaded', () => {
-        checkAuth();
-        setupListeners();
-    });
+    document.addEventListener('DOMContentLoaded', () => { checkAuth(); setupListeners(); });
 
+    /* AUTH */
     function checkAuth() {
         sessionStorage.getItem('primesound_auth') === 'true' ? showApp() : showLogin();
     }
@@ -829,10 +1195,34 @@
         loadRecords();
     }
 
-    /* ─── Listeners ─── */
+    function logout() {
+        sessionStorage.removeItem('primesound_auth');
+        document.getElementById('authCode').value = '';
+        showLogin();
+    }
+
+    /* PASSWORD TOGGLE */
+    function togglePasswordVisibility() {
+        const input = document.getElementById('authCode');
+        const icon = document.getElementById('eyeIcon');
+        if (input.type === 'password') {
+            input.type = 'text';
+            icon.innerHTML = '<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line>';
+        } else {
+            input.type = 'password';
+            icon.innerHTML = '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle>';
+        }
+    }
+
+    /* INSTRUCTIONS */
+    function toggleInstructions() {
+        const overlay = document.getElementById('instructionsOverlay');
+        overlay.classList.toggle('show');
+    }
+
+    /* LISTENERS */
     function setupListeners() {
 
-        /* Login */
         document.getElementById('loginForm').addEventListener('submit', e => {
             e.preventDefault();
             const code = document.getElementById('authCode').value;
@@ -840,169 +1230,235 @@
                 sessionStorage.setItem('primesound_auth', 'true');
                 showApp();
             } else {
-                showMsg('loginMessage', '✕  Código inválido', 'error');
+                showMsg('loginMessage', 'Código inválido', 'error');
                 document.getElementById('authCode').value = '';
             }
         });
 
-        /* Service pills */
-        document.querySelectorAll('.service-btn').forEach(btn => {
+        document.querySelectorAll('.svc-chip').forEach(btn => {
             btn.addEventListener('click', e => {
                 e.preventDefault();
-                document.querySelectorAll('.service-btn').forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
+                document.querySelectorAll('.svc-chip').forEach(b => b.classList.remove('on'));
+                btn.classList.add('on');
                 selectedService = btn.dataset.service;
             });
         });
 
-        /* Toggle retroativo */
         document.getElementById('toggleRetroactiveRow').addEventListener('click', () => {
             isRetroactive = !isRetroactive;
             document.getElementById('toggleRetroactive').classList.toggle('on', isRetroactive);
-            document.getElementById('toggleLabel').textContent = isRetroactive
-                ? 'Data específica' : 'Agora (hora atual)';
+            document.getElementById('toggleLabel').textContent = isRetroactive ? 'Data específica' : 'Agora (hora atual)';
             document.getElementById('dateTimeFields').classList.toggle('hidden', !isRetroactive);
         });
 
-        /* Tipo de evento → exibir/esconder email */
         document.getElementById('eventType').addEventListener('change', e => {
-            const show = e.target.value === 'Purchase';
-            document.getElementById('emailField').classList.toggle('hidden', !show);
-            document.getElementById('email').required = show;
-            if (!show) document.getElementById('email').value = '';
+            const isPurchase = e.target.value === 'Purchase';
+            document.getElementById('emailField').classList.toggle('hidden', !isPurchase);
+            document.getElementById('email').required = isPurchase;
+            if (!isPurchase) document.getElementById('email').value = '';
+            
+            const btnAddPhone = document.getElementById('btnAddPhone');
+            if (isPurchase) {
+                trimPhoneFields(1);
+                btnAddPhone.classList.add('hidden');
+            } else {
+                btnAddPhone.classList.remove('hidden');
+                updateAddPhoneButton();
+            }
         });
 
-        /* Telefone validação */
-        document.getElementById('phone').addEventListener('blur', validatePhone);
-
-        /* Nome/Sobrenome: auto-capitalizar ao sair */
-        ['firstName', 'lastName'].forEach(id => {
-            document.getElementById(id).addEventListener('blur', () => {
-                const el = document.getElementById(id);
-                if (el.value.trim()) el.value = capitalizeFirst(el.value.trim());
-                validateName(id);
-            });
-        });
-
-        /* Submit */
         document.getElementById('dataForm').addEventListener('submit', async e => {
             e.preventDefault();
             if (!isSubmitting) await submitForm();
         });
 
-        /* Reset */
         document.getElementById('dataForm').addEventListener('reset', () => {
             setTimeout(resetUI, 0);
         });
     }
 
-    /* ─── Reset UI helper ─── */
+    /* PHONE FIELDS */
+    function addPhoneField() {
+        const container = document.getElementById('phoneFieldsContainer');
+        if (container.children.length >= MAX_PHONES) return;
+
+        const wrapper = document.createElement('div');
+        wrapper.className = 'phone-field-wrapper';
+        
+        const fieldDiv = document.createElement('div');
+        fieldDiv.className = 'field';
+        
+        const input = document.createElement('input');
+        input.type = 'tel';
+        input.className = 'inp phone-input';
+        input.placeholder = '+55 11 99999-9999';
+        input.addEventListener('blur', function() { validatePhoneField(this); });
+        
+        const hint = document.createElement('div');
+        hint.className = 'hint show';
+        hint.textContent = 'Ex: +55 11 99999-9999 ou (11) 99999-9999';
+        
+        fieldDiv.appendChild(input);
+        fieldDiv.appendChild(hint);
+
+        const btnRemove = document.createElement('button');
+        btnRemove.type = 'button';
+        btnRemove.className = 'btn-remove-phone';
+        btnRemove.innerHTML = '×';
+        btnRemove.onclick = () => { wrapper.remove(); updateAddPhoneButton(); };
+
+        wrapper.appendChild(fieldDiv);
+        wrapper.appendChild(btnRemove);
+        container.appendChild(wrapper);
+
+        updateAddPhoneButton();
+    }
+
+    function trimPhoneFields(count) {
+        const container = document.getElementById('phoneFieldsContainer');
+        while (container.children.length > count) {
+            container.removeChild(container.lastChild);
+        }
+        updateAddPhoneButton();
+    }
+
+    function updateAddPhoneButton() {
+        const container = document.getElementById('phoneFieldsContainer');
+        const btn = document.getElementById('btnAddPhone');
+        const hint = document.getElementById('maxPhonesHint');
+        
+        if (container.children.length >= MAX_PHONES) {
+            btn.classList.add('disabled');
+            hint.classList.remove('hidden');
+        } else {
+            btn.classList.remove('disabled');
+            hint.classList.add('hidden');
+        }
+    }
+
+    function validatePhoneField(input) {
+        const digits = input.value.replace(/\D/g, '');
+        const hint = input.parentElement.querySelector('.hint');
+        if (digits.length >= 10) {
+            input.classList.add('ok');
+            input.classList.remove('err');
+            hint.textContent = 'Telefone válido';
+            hint.className = 'hint ok';
+        } else if (digits.length > 0) {
+            input.classList.add('err');
+            input.classList.remove('ok');
+            hint.textContent = 'Incompleto — mínimo 10 dígitos';
+            hint.className = 'hint err';
+        } else {
+            input.classList.remove('err', 'ok');
+            hint.textContent = 'Ex: +55 11 99999-9999 ou (11) 99999-9999';
+            hint.className = 'hint show';
+        }
+    }
+
+    function getPhones() {
+        const inputs = document.querySelectorAll('.phone-input');
+        const phones = [];
+        inputs.forEach(inp => {
+            const digits = inp.value.replace(/\D/g, '');
+            if (digits.length >= 10) phones.push(digits);
+        });
+        return phones;
+    }
+
+    /* CLEAR RECORDS */
+    function toggleClearConfirmation() {
+        const confirmation = document.getElementById('clearConfirmation');
+        confirmation.classList.toggle('show');
+    }
+
+    function confirmClear() {
+        allRecords = [];
+        renderTable();
+        document.getElementById('clearConfirmation').classList.remove('show');
+    }
+
+    function cancelClear() {
+        document.getElementById('clearConfirmation').classList.remove('show');
+    }
+
+    /* HELPERS */
+    function capitalFirst(s) {
+        return s ? s.charAt(0).toUpperCase() + s.slice(1) : s;
+    }
+
+    function isCapitalized(s) {
+        if (!s) return true;
+        const c = s.charAt(0);
+        return c !== c.toLowerCase() && c === c.toUpperCase();
+    }
+
+    function validateName(id) {
+        const el = document.getElementById(id);
+        const hint = document.getElementById(id + 'Hint');
+        const val = el.value.trim();
+        if (!val) {
+            el.classList.remove('err', 'ok');
+            hint.textContent = 'Primeira letra maiúscula';
+            hint.className = 'hint';
+            return true;
+        }
+        if (!isCapitalized(val)) {
+            el.classList.add('err');
+            el.classList.remove('ok');
+            hint.textContent = 'Deve começar com letra maiúscula';
+            hint.className = 'hint err';
+            return false;
+        }
+        el.classList.remove('err');
+        el.classList.add('ok');
+        hint.textContent = 'Ok';
+        hint.className = 'hint ok';
+        return true;
+    }
+
     function resetUI() {
-        document.querySelectorAll('.service-btn').forEach(b => b.classList.remove('active'));
-        document.querySelector('[data-service="Pelicula"]').classList.add('active');
+        document.querySelectorAll('.svc-chip').forEach(b => b.classList.remove('on'));
+        document.querySelector('[data-service="Pelicula"]').classList.add('on');
         selectedService = 'Pelicula';
         document.getElementById('emailField').classList.add('hidden');
         document.getElementById('email').required = false;
         document.querySelectorAll('.hint').forEach(h => { h.className = 'hint'; });
-        document.querySelectorAll('.input').forEach(i => { i.classList.remove('err','ok'); });
+        document.querySelectorAll('.inp').forEach(i => i.classList.remove('err', 'ok'));
         hideMsg('processingMsg');
         hideMsg('formMessage');
-        // Restore phone hint default
-        const ph = document.getElementById('phoneHint');
-        ph.textContent = 'Ex: +55 11 99999-9999 ou (11) 99999-9999';
-        ph.className = 'hint show';
-        // Restore name hints default
-        ['firstNameHint','lastNameHint'].forEach(id => {
+        trimPhoneFields(1);
+        document.getElementById('btnAddPhone').classList.remove('hidden');
+        updateAddPhoneButton();
+        document.getElementById('clearConfirmation').classList.remove('show');
+        ['firstNameHint', 'lastNameHint'].forEach(id => {
             const h = document.getElementById(id);
             h.textContent = 'Primeira letra maiúscula';
             h.className = 'hint';
         });
     }
 
-    /* ─── Helpers ─── */
-    function capitalizeFirst(s) {
-        if (!s) return s;
-        return s.charAt(0).toUpperCase() + s.slice(1);
-    }
-
-    function isProperCapitalized(s) {
-        if (!s) return true; // optional = ok if empty
-        const ch = s.charAt(0);
-        // Must be an alphabetic character AND uppercase
-        return ch !== ch.toLowerCase() && ch === ch.toUpperCase();
-    }
-
-    function validateName(id) {
-        const el   = document.getElementById(id);
-        const hint = document.getElementById(id + 'Hint');
-        const val  = el.value.trim();
-
-        if (!val) {
-            el.classList.remove('err','ok');
-            hint.textContent = 'Primeira letra maiúscula';
-            hint.className   = 'hint';
-            return true;
-        }
-
-        if (!isProperCapitalized(val)) {
-            el.classList.add('err');
-            el.classList.remove('ok');
-            hint.textContent = '✕  Deve começar com letra maiúscula. Ex: João';
-            hint.className   = 'hint err';
-            return false;
-        }
-
-        el.classList.remove('err');
-        el.classList.add('ok');
-        hint.textContent = '✓  Ok';
-        hint.className   = 'hint ok';
-        return true;
-    }
-
-    function validatePhone() {
-        const el    = document.getElementById('phone');
-        const hint  = document.getElementById('phoneHint');
-        const digits = el.value.replace(/\D/g, '');
-
-        if (digits.length >= 10) {
-            el.classList.add('ok'); el.classList.remove('err');
-            hint.textContent = '✓  Telefone válido';
-            hint.className   = 'hint ok';
-            return true;
-        } else if (digits.length > 0) {
-            el.classList.add('err'); el.classList.remove('ok');
-            hint.textContent = '✕  Telefone incompleto (mín. 10 dígitos)';
-            hint.className   = 'hint err';
-            return false;
-        }
-        el.classList.remove('err','ok');
-        hint.textContent = 'Ex: +55 11 99999-9999 ou (11) 99999-9999';
-        hint.className   = 'hint show';
-        return false;
-    }
-
-    /* ─── Submit ─── */
+    /* SUBMIT */
     async function submitForm() {
-        if (!validatePhone()) {
-            showMsg('formMessage', '✕  Telefone inválido', 'error');
+        const phones = getPhones();
+        if (!phones.length) {
+            showMsg('formMessage', 'Telefone inválido', 'error');
             return;
         }
 
         const eventType = document.getElementById('eventType').value;
         if (!eventType) {
-            showMsg('formMessage', '✕  Selecione o tipo de evento', 'error');
+            showMsg('formMessage', 'Selecione o tipo de evento', 'error');
             return;
         }
 
         if (eventType === 'Purchase' && !document.getElementById('email').value.trim()) {
-            showMsg('formMessage', '✕  Email obrigatório para venda', 'error');
+            showMsg('formMessage', 'Email obrigatório para venda', 'error');
             return;
         }
 
-        const fnOk = validateName('firstName');
-        const lnOk = validateName('lastName');
-        if (!fnOk || !lnOk) {
-            showMsg('formMessage', '✕  Nome/Sobrenome: primeira letra deve ser maiúscula', 'error');
+        if (!validateName('firstName') || !validateName('lastName')) {
+            showMsg('formMessage', 'Nome/Sobrenome deve começar com letra maiúscula', 'error');
             return;
         }
 
@@ -1011,7 +1467,7 @@
             const d = document.getElementById('eventDate').value;
             const t = document.getElementById('eventTime').value;
             if (!d || !t) {
-                showMsg('formMessage', '✕  Informe data e hora', 'error');
+                showMsg('formMessage', 'Informe data e hora', 'error');
                 return;
             }
             eventDateTime = new Date(`${d}T${t}`);
@@ -1019,7 +1475,6 @@
             eventDateTime = new Date();
         }
 
-        /* Loading state */
         isSubmitting = true;
         const btn = document.getElementById('submitBtn');
         btn.disabled = true;
@@ -1027,42 +1482,50 @@
         hideMsg('formMessage');
         showMsg('processingMsg', null, 'loading');
 
-        const data = {
-            phone:      document.getElementById('phone').value.replace(/\D/g,''),
-            email:      document.getElementById('email').value || '',
+        const baseData = {
+            email: document.getElementById('email').value || '',
             event_time: eventDateTime.toISOString(),
             event_name: eventType,
-            service:    selectedService,
-            firstName:  document.getElementById('firstName').value,
-            lastName:   document.getElementById('lastName').value,
-            country:    'Brasil'
+            service: selectedService,
+            firstName: document.getElementById('firstName').value,
+            lastName: document.getElementById('lastName').value,
+            country: 'Brasil'
         };
 
-        try {
-            await fetch(APPS_SCRIPT_URL, {
-                method: 'POST',
-                body:   JSON.stringify(data),
-                mode:   'no-cors'
-            });
-
-            hideMsg('processingMsg');
-            showMsg('formMessage', '✓  Lead registrado com sucesso!', 'success');
-
-            document.getElementById('dataForm').reset();
-            setTimeout(() => loadRecords(), 1200);
-            setTimeout(() => hideMsg('formMessage'), 4000);
-
-        } catch (err) {
-            hideMsg('processingMsg');
-            showMsg('formMessage', '✕  Erro ao enviar: ' + err.message, 'error');
-        } finally {
-            isSubmitting    = false;
-            btn.disabled    = false;
-            btn.innerHTML   = 'Registrar Lead';
+        let successCount = 0;
+        for (const phone of phones) {
+            try {
+                await fetch(APPS_SCRIPT_URL, {
+                    method: 'POST',
+                    body: JSON.stringify({ ...baseData, phone }),
+                    mode: 'no-cors'
+                });
+                successCount++;
+            } catch (err) {
+                console.error(err);
+            }
         }
+
+        hideMsg('processingMsg');
+        
+        let msgText = '';
+        if (successCount === 1) {
+            msgText = eventType === 'Lead' ? '1 Lead registrado com sucesso!' : '1 Venda registrada com sucesso!';
+        } else {
+            msgText = eventType === 'Lead' ? `${successCount} Leads registrados com sucesso!` : `${successCount} Vendas registradas com sucesso!`;
+        }
+        
+        showMsg('formMessage', msgText, 'success');
+        document.getElementById('dataForm').reset();
+        setTimeout(() => loadRecords(), 1200);
+        setTimeout(() => hideMsg('formMessage'), 4000);
+
+        isSubmitting = false;
+        btn.disabled = false;
+        btn.innerHTML = 'Registrar Lead';
     }
 
-    /* ─── Records ─── */
+    /* RECORDS */
     async function loadRecords() {
         try {
             const res = await fetch(APPS_SCRIPT_URL + '?action=getRecords');
@@ -1072,41 +1535,45 @@
                 renderTable();
             }
         } catch (e) {
-            console.error('Erro ao carregar registros:', e);
+            console.error(e);
         }
     }
 
     function renderTable() {
-        const body  = document.getElementById('tableBody');
+        const body = document.getElementById('tableBody');
         const count = document.getElementById('recordsCount');
+        const btnClear = document.getElementById('btnClearRec');
 
         if (!allRecords.length) {
-            body.innerHTML = '<div class="empty-state">Nenhum registro ainda</div>';
+            body.innerHTML = '<div class="empty">Nenhum registro ainda</div>';
             count.textContent = '';
+            btnClear.classList.add('hidden');
             return;
         }
 
         count.textContent = allRecords.length + ' registros';
+        btnClear.classList.remove('hidden');
 
         const list = document.createElement('div');
-        list.className = 'records-list';
+        list.className = 'rec-list';
 
         [...allRecords].reverse().forEach((rec, i) => {
-            const row  = document.createElement('div');
-            row.className = 'record-row' + (i < 3 ? ' new' : '');
+            const row = document.createElement('div');
+            row.className = 'rec-row' + (i < 3 ? ' fresh' : '');
 
             const time = new Date(rec.event_time).toLocaleString('pt-BR', {
-                day:'2-digit', month:'2-digit',
-                hour:'2-digit', minute:'2-digit'
+                day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit'
             });
 
-            const typeClass = rec.event_name === 'Purchase' ? 'badge-purchase' : 'badge-lead';
+            const typeChip = rec.event_name === 'Purchase'
+                ? '<span class="chip chip-sale">Venda</span>'
+                : '<span class="chip chip-lead">Lead</span>';
 
             row.innerHTML = `
                 <span class="rec-phone">${rec.phone}</span>
                 <div class="rec-meta">
-                    <span class="badge badge-svc">${rec.service}</span>
-                    <span class="badge ${typeClass}">${rec.event_name}</span>
+                    <span class="chip chip-svc">${rec.service}</span>
+                    ${typeChip}
                     <span class="rec-time">${time}</span>
                 </div>`;
 
@@ -1117,7 +1584,7 @@
         body.appendChild(list);
     }
 
-    /* ─── Message helpers ─── */
+    /* MESSAGES */
     function showMsg(id, text, type) {
         const el = document.getElementById(id);
         if (text !== null) el.innerHTML = text;
@@ -1126,13 +1593,6 @@
 
     function hideMsg(id) {
         document.getElementById(id).className = 'msg';
-    }
-
-    /* ─── Logout ─── */
-    function logout() {
-        sessionStorage.removeItem('primesound_auth');
-        document.getElementById('authCode').value = '';
-        showLogin();
     }
 </script>
 </body>
